@@ -13,18 +13,51 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="GUI">
+      <UniqueIdentifier>{54c148df-d703-4323-a8be-037491a9fedf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI\src">
+      <UniqueIdentifier>{f55dd5ba-fc67-4042-8731-44c77d136926}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI\include">
+      <UniqueIdentifier>{cb2a4c9d-523d-41a6-b6b9-b108a8bb0325}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Gui.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Button.cpp">
+      <Filter>GUI\src</Filter>
+    </ClCompile>
+    <ClCompile Include="Text.cpp">
+      <Filter>GUI\src</Filter>
+    </ClCompile>
+    <ClCompile Include="ComboBox.cpp">
+      <Filter>GUI\src</Filter>
+    </ClCompile>
+    <ClCompile Include="TextBox.cpp">
+      <Filter>GUI\src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Gui.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Text.h">
+      <Filter>GUI\include</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>GUI\include</Filter>
+    </ClInclude>
+    <ClInclude Include="ComboBox.h">
+      <Filter>GUI\include</Filter>
+    </ClInclude>
+    <ClInclude Include="globals.h">
+      <Filter>GUI\include</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>GUI\include</Filter>
+    </ClInclude>
+    <ClInclude Include="TextBox.h">
+      <Filter>GUI\include</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

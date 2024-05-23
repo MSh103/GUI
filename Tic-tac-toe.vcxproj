@@ -19,11 +19,19 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Gui.cpp" />
+    <ClCompile Include="Button.cpp" />
+    <ClCompile Include="ComboBox.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Text.cpp" />
+    <ClCompile Include="TextBox.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Gui.h" />
+    <ClInclude Include="Button.h" />
+    <ClInclude Include="ComboBox.h" />
+    <ClInclude Include="globals.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="Text.h" />
+    <ClInclude Include="TextBox.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

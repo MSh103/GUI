@@ -1,4 +1,7 @@
-#include "Gui.h"
+#include "Text.h"
+#include "Button.h"
+#include "ComboBox.h"
+#include "TextBox.h"
 
 int state = 0;
 int titleState = 0;
@@ -8,7 +11,6 @@ int main(int argc, const char* argv[])
 {
 	sf::RenderWindow window(sf::VideoMode(1400, 800), "GUI CREATING");
 	sf::RenderWindow target;
-
 
 	Gui::Button button(
 		"Quit",
@@ -48,18 +50,10 @@ int main(int argc, const char* argv[])
 	sf::CircleShape circle(200);
 	circle.setFillColor(sf::Color::Blue);
 
-	std::vector < std::string> options = {
+	std::vector <std::string> options = {
 		"1920 / 1080",
 		"1400 / 800",
 		"1280 / 800",
-		"Back..",
-	};
-
-	std::vector <bool> noOfButtons = {
-		false,
-		false,
-		false,
-		false,
 	};
 
 	Gui::ComboBox comboBox(
@@ -68,8 +62,21 @@ int main(int argc, const char* argv[])
 		options,
 		{ 250, 80 },
 		"Select...",
-		noOfButtons
+		sf::Color::Black,
+		sf::Color(100, 100, 100),
+		0,
+		0
 	);
+
+	Gui::TextBox textB(
+		true,
+		20,
+		24,
+		sf::Color::Black,
+		{ 300, 100 },
+		{ 100, 100 }
+	);
+
 
 	bool running = true;
 
@@ -98,7 +105,7 @@ int main(int argc, const char* argv[])
 						{
 							target.create(sf::VideoMode(400, 400), "TEST");
 							target.setPosition(sf::Vector2i(
-								sf::VideoMode::getDesktopMode().width,
+								sf::VideoMode::getDesktopMode().width - 400,
 								0
 							));
 						}
@@ -122,6 +129,7 @@ int main(int argc, const char* argv[])
 							window.close();
 							window.create(sf::VideoMode(1920, 1080), "GUI CREATING");
 							window.setPosition({ 0, 0 });
+							comboBox.setOpenState(false);
 						}
 						if (comboBox.hoverButton[1])
 						{
@@ -132,20 +140,24 @@ int main(int argc, const char* argv[])
 								sf::VideoMode::getDesktopMode().width / 2 - (window.getSize().x / 2),
 								sf::VideoMode::getDesktopMode().height / 2 - (window.getSize().y / 2)
 							));
+							comboBox.setOpenState(false);
 						}
 						if (comboBox.hoverButton[2])
 						{
 							comboBox.setTitle(2);
-							window.close();
 							window.create(sf::VideoMode(1280, 800), "GUI CREATING");
 							window.setPosition(sf::Vector2i(
 								sf::VideoMode::getDesktopMode().width / 2 - (window.getSize().x / 2),
 								sf::VideoMode::getDesktopMode().height / 2 - (window.getSize().y / 2)
 							));
+							comboBox.setOpenState(false);
 						}
-						if (comboBox.hoverButton[3])
+						if (textB.isOver())
 						{
-							state = titleState;
+							textB.isSelected = true;
+						} else if (textB.isOver() == false)
+						{
+							textB.isSelected = false;
 						}
 					}
 				}
@@ -164,6 +176,10 @@ int main(int argc, const char* argv[])
 						state = titleState;
 					}
 				}
+			}
+			if (ev.type == sf::Event::TextEntered)
+			{
+				textB.input(ev);
 			}
 		}
 		sf::Event event;
@@ -257,11 +273,13 @@ int main(int argc, const char* argv[])
 		else if (state == optionsState)
 		{
 			comboBox.update(window);
-			comboBox.hoverLogic();
-
+			textB.update(window);
+			comboBox.hoverLogic(sf::Color::Black, sf::Color(45, 45, 45), sf::Color(100, 100, 100), sf::Color(150, 150, 150));
+			textB.hoverLogic();
 			window.clear(sf::Color(100, 100, 255));
 
 			comboBox.render(window);
+			textB.render(window);
 
 			window.display();
 		}
