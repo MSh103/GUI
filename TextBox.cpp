@@ -52,14 +52,6 @@ Gui::TextBox::TextBox(bool hasLimit, int limit, int charSize, sf::Color TextColo
 
 	box.setSize(size);
 	box.setPosition(pos);
-
-	if (isSelected)
-	{
-		text.setString("_");
-	}
-	else {
-		text.setString("");
-	}
 	
 	text.setOrigin(text.getLocalBounds().getSize() / 2.f);
 	text.setPosition(pos + (size / 2.f));

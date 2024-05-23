@@ -24,6 +24,7 @@ namespace Gui {
 
 		void inputLogic(int charTyped);
 
+
 	public:
 		bool isSelected;
 

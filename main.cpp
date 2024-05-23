@@ -57,7 +57,7 @@ int main(int argc, const char* argv[])
 	};
 
 	Gui::ComboBox comboBox(
-		options.size(),
+		int(options.size()),
 		sf::Vector2f(window.getSize().x / 2.f + 50, 100),
 		options,
 		{ 250, 80 },
