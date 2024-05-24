@@ -13,6 +13,25 @@ void Gui::TextBox::init()
 	
 	box.setOutlineThickness(5.f);
 	box.setOutlineColor(sf::Color::Black);
+    
+    if(!backBuffer.loadFromFile("res/sfx/back.wav"))
+    {
+        std::cerr << "Failed to load Back buffer!\n";
+    }
+    
+    backSpaceSound.setBuffer(backBuffer);
+    backSpaceSound.setLoop(false);
+    
+    if(!keyBuffer.loadFromFile("res/sfx/key.mp3"))
+    {
+        std::cerr << "Failed to load key buffer!\n";
+    }
+    
+    keySound.setBuffer(keyBuffer);
+    keySound.setLoop(false);
+    
+    keyPlayed = false;
+    backPlayed = false;
 }
 
 void Gui::TextBox::deleteLastChar()
@@ -44,7 +63,7 @@ Gui::TextBox::TextBox()
 {
 }
 
-Gui::TextBox::TextBox(bool hasLimit, int limit, int charSize, sf::Color TextColor, sf::Vector2f size, sf::Vector2f pos)
+Gui::TextBox::TextBox(bool hasLimit, int limit, int charSize, sf::Color TextColor, sf::Vector2f size, sf::Vector2f pos, bool soundState)
 {
 	init();
 	text.setCharacterSize(charSize);
@@ -58,9 +77,10 @@ Gui::TextBox::TextBox(bool hasLimit, int limit, int charSize, sf::Color TextColo
 
 	this->hasLimit = hasLimit;
 	this->limit = limit;
+    this->soundState = soundState;
 }
 
-void Gui::TextBox::create(bool hasLimit, int limit, int charSize, sf::Color TextColor, sf::Vector2f size, sf::Vector2f pos)
+void Gui::TextBox::create(bool hasLimit, int limit, int charSize, sf::Color TextColor, sf::Vector2f size, sf::Vector2f pos, bool soundState)
 {
 	init();
 	text.setCharacterSize(charSize);
@@ -74,6 +94,7 @@ void Gui::TextBox::create(bool hasLimit, int limit, int charSize, sf::Color Text
 
 	this->hasLimit = hasLimit;
 	this->limit = limit;
+    this->soundState = soundState;
 }
 
 void Gui::TextBox::update(sf::RenderWindow& target)
@@ -96,30 +117,60 @@ void Gui::TextBox::input(sf::Event& input)
 {
 	int charTyped = input.text.unicode;
 
-	if (isSelected)
-	{
-		if (charTyped < 128)
-		{
-			if (charTyped == 8) // Backspace key
-			{
-				deleteLastChar();
-			}
-			else
-			{
-				if (hasLimit)
-				{
-					if (os.str().length() <= limit)
-					{
-						inputLogic(charTyped);
-					}
-				}
-				else
-				{
-					inputLogic(charTyped);
-				}
-			}
-		}
-	}
+    if(input.type == sf::Event::TextEntered)
+    {
+        if (isSelected)
+        {
+            if (charTyped < 128)
+            {
+                if (charTyped == 8) // Backspace key
+                {
+                    deleteLastChar();
+                    if(soundState)
+                    {
+                        if(!backPlayed)
+                        {
+                            if(!backSpaceSound.getStatus() && !backSpaceSound.getLoop())
+                            {
+                                backSpaceSound.play();
+                            }
+                            backPlayed = true;
+                        }
+                    }
+                }
+                else
+                {
+                    if (hasLimit)
+                    {
+                        if (os.str().length() <= limit)
+                        {
+                            inputLogic(charTyped);
+                            if(soundState)
+                            {
+                                if(!keyPlayed)
+                                {
+                                    if(!keySound.getStatus() && !keySound.getLoop())
+                                    {
+                                        keySound.play();
+                                    }
+                                    keyPlayed = true;
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        inputLogic(charTyped);
+                    }
+                }
+            }
+        }
+    } else {
+        keyPlayed = false;
+        keySound.stop();
+        backPlayed = false;
+        backSpaceSound.stop();
+    }
 }
 
 void Gui::TextBox::hoverLogic()

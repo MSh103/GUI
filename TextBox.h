@@ -12,11 +12,18 @@ namespace Gui {
 	private:
 		sf::Text text;
 		sf::Font font;
+        sf::SoundBuffer backBuffer;
+        sf::SoundBuffer keyBuffer;
+        sf::Sound backSpaceSound;
+        sf::Sound keySound;
 		sf::RectangleShape box;
 		std::ostringstream os;
 		int limit;
 		bool hasLimit;
 		bool isMouseOver;
+        bool keyPlayed;
+        bool backPlayed;
+        bool soundState;
 
 		void init();
 
@@ -29,8 +36,8 @@ namespace Gui {
 		bool isSelected;
 
 		TextBox();
-		TextBox(bool hasLimit, int limit, int charSize, sf::Color TextColor, sf::Vector2f size, sf::Vector2f pos);
-		void create(bool hasLimit, int limit, int charSize, sf::Color TextColor, sf::Vector2f size, sf::Vector2f pos);
+		TextBox(bool hasLimit, int limit, int charSize, sf::Color TextColor, sf::Vector2f size, sf::Vector2f pos, bool soundState);
+		void create(bool hasLimit, int limit, int charSize, sf::Color TextColor, sf::Vector2f size, sf::Vector2f pos, bool soundState);
 		
 		void update(sf::RenderWindow& target);
 

@@ -74,7 +74,8 @@ int main(int argc, const char* argv[])
 		24,
 		sf::Color::Black,
 		{ 300, 100 },
-		{ 100, 100 }
+		{ 100, 100 },
+        true
 	);
 
 
@@ -177,10 +178,7 @@ int main(int argc, const char* argv[])
 					}
 				}
 			}
-			if (ev.type == sf::Event::TextEntered)
-			{
-				textB.input(ev);
-			}
+            textB.input(ev);
 		}
 		sf::Event event;
 		while (target.pollEvent(event))
