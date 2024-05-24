@@ -18,12 +18,15 @@ namespace Gui {
         sf::Sound keySound;
 		sf::RectangleShape box;
 		std::ostringstream os;
+		std::string submission;
 		int limit;
 		bool hasLimit;
 		bool isMouseOver;
         bool keyPlayed;
         bool backPlayed;
         bool soundState;
+		bool save;
+		std::ofstream ofs;
 
 		void init();
 
@@ -36,9 +39,12 @@ namespace Gui {
 		bool isSelected;
 
 		TextBox();
-		TextBox(bool hasLimit, int limit, int charSize, sf::Color TextColor, sf::Vector2f size, sf::Vector2f pos, bool soundState);
-		void create(bool hasLimit, int limit, int charSize, sf::Color TextColor, sf::Vector2f size, sf::Vector2f pos, bool soundState);
-		
+		~TextBox();
+		TextBox(bool save, bool hasLimit, int limit, int charSize, sf::Color TextColor, sf::Vector2f size, sf::Vector2f pos, bool soundState);
+		void create(bool save, bool hasLimit, int limit, int charSize, sf::Color TextColor, sf::Vector2f size, sf::Vector2f pos, bool soundState);
+	
+		void setFilePath(std::string path) { ofs.open(path, std::ios::app); }
+
 		void update(sf::RenderWindow& target);
 
 		void input(sf::Event& input);
@@ -48,6 +54,10 @@ namespace Gui {
 		void render(sf::RenderWindow& target);
 
 		bool isOver() { return isMouseOver; }
+
+		std::string getSubmittedText() { return submission; }
+
+		void saveToFile() { ofs << submission << std::endl; }
 
 	};
 

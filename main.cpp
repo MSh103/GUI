@@ -70,6 +70,7 @@ int main(int argc, const char* argv[])
 
 	Gui::TextBox textB(
 		true,
+		true,
 		20,
 		24,
 		sf::Color::Black,
@@ -77,6 +78,8 @@ int main(int argc, const char* argv[])
 		{ 100, 100 },
         true
 	);
+
+	textB.setFilePath("submissions.log");
 
 
 	bool running = true;

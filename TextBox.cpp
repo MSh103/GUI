@@ -32,6 +32,7 @@ void Gui::TextBox::init()
     
     keyPlayed = false;
     backPlayed = false;
+
 }
 
 void Gui::TextBox::deleteLastChar()
@@ -63,7 +64,7 @@ Gui::TextBox::TextBox()
 {
 }
 
-Gui::TextBox::TextBox(bool hasLimit, int limit, int charSize, sf::Color TextColor, sf::Vector2f size, sf::Vector2f pos, bool soundState)
+Gui::TextBox::TextBox(bool save, bool hasLimit, int limit, int charSize, sf::Color TextColor, sf::Vector2f size, sf::Vector2f pos, bool soundState)
 {
 	init();
 	text.setCharacterSize(charSize);
@@ -78,9 +79,15 @@ Gui::TextBox::TextBox(bool hasLimit, int limit, int charSize, sf::Color TextColo
 	this->hasLimit = hasLimit;
 	this->limit = limit;
     this->soundState = soundState;
+    this->save = save;
 }
 
-void Gui::TextBox::create(bool hasLimit, int limit, int charSize, sf::Color TextColor, sf::Vector2f size, sf::Vector2f pos, bool soundState)
+Gui::TextBox::~TextBox()
+{
+    ofs.close();
+}
+
+void Gui::TextBox::create(bool save, bool hasLimit, int limit, int charSize, sf::Color TextColor, sf::Vector2f size, sf::Vector2f pos, bool soundState)
 {
 	init();
 	text.setCharacterSize(charSize);
@@ -95,6 +102,7 @@ void Gui::TextBox::create(bool hasLimit, int limit, int charSize, sf::Color Text
 	this->hasLimit = hasLimit;
 	this->limit = limit;
     this->soundState = soundState;
+    this->save = save;
 }
 
 void Gui::TextBox::update(sf::RenderWindow& target)
@@ -167,9 +175,22 @@ void Gui::TextBox::input(sf::Event& input)
         }
     } else {
         keyPlayed = false;
-        keySound.stop();
         backPlayed = false;
-        backSpaceSound.stop();
+        keySound.stop();
+		backSpaceSound.stop();
+    }
+
+    if (input.type == sf::Event::KeyPressed)
+    {
+        if (input.key.code == sf::Keyboard::Enter)
+        {
+            this->submission = os.str();
+            os.str("");
+            if (save)
+            {
+                saveToFile();
+            }
+        }
     }
 }
 
