@@ -13,25 +13,6 @@ void Gui::TextBox::init()
 	
 	box.setOutlineThickness(5.f);
 	box.setOutlineColor(sf::Color::Black);
-    
-    if(!backBuffer.loadFromFile("res/sfx/back.wav"))
-    {
-        std::cerr << "Failed to load Back buffer!\n";
-    }
-    
-    backSpaceSound.setBuffer(backBuffer);
-    backSpaceSound.setLoop(false);
-    
-    if(!keyBuffer.loadFromFile("res/sfx/key.mp3"))
-    {
-        std::cerr << "Failed to load key buffer!\n";
-    }
-    
-    keySound.setBuffer(keyBuffer);
-    keySound.setLoop(false);
-    
-    keyPlayed = false;
-    backPlayed = false;
 
 }
 
@@ -64,7 +45,7 @@ Gui::TextBox::TextBox()
 {
 }
 
-Gui::TextBox::TextBox(bool save, bool hasLimit, int limit, int charSize, sf::Color TextColor, sf::Vector2f size, sf::Vector2f pos, bool soundState)
+Gui::TextBox::TextBox(bool save, bool hasLimit, int limit, int charSize, sf::Color TextColor, sf::Vector2f size, sf::Vector2f pos)
 {
 	init();
 	text.setCharacterSize(charSize);
@@ -78,7 +59,6 @@ Gui::TextBox::TextBox(bool save, bool hasLimit, int limit, int charSize, sf::Col
 
 	this->hasLimit = hasLimit;
 	this->limit = limit;
-    this->soundState = soundState;
     this->save = save;
 }
 
@@ -87,7 +67,7 @@ Gui::TextBox::~TextBox()
     ofs.close();
 }
 
-void Gui::TextBox::create(bool save, bool hasLimit, int limit, int charSize, sf::Color TextColor, sf::Vector2f size, sf::Vector2f pos, bool soundState)
+void Gui::TextBox::create(bool save, bool hasLimit, int limit, int charSize, sf::Color TextColor, sf::Vector2f size, sf::Vector2f pos)
 {
 	init();
 	text.setCharacterSize(charSize);
@@ -101,7 +81,6 @@ void Gui::TextBox::create(bool save, bool hasLimit, int limit, int charSize, sf:
 
 	this->hasLimit = hasLimit;
 	this->limit = limit;
-    this->soundState = soundState;
     this->save = save;
 }
 
@@ -125,73 +104,46 @@ void Gui::TextBox::input(sf::Event& input)
 {
 	int charTyped = input.text.unicode;
 
-    if(input.type == sf::Event::TextEntered)
-    {
-        if (isSelected)
-        {
-            if (charTyped < 128)
-            {
-                if (charTyped == 8) // Backspace key
-                {
-                    deleteLastChar();
-                    if(soundState)
-                    {
-                        if(!backPlayed)
-                        {
-                            if(!backSpaceSound.getStatus() && !backSpaceSound.getLoop())
-                            {
-                                backSpaceSound.play();
-                            }
-                            backPlayed = true;
-                        }
-                    }
-                }
-                else
-                {
-                    if (hasLimit)
-                    {
-                        if (os.str().length() <= limit)
-                        {
-                            inputLogic(charTyped);
-                            if(soundState)
-                            {
-                                if(!keyPlayed)
-                                {
-                                    if(!keySound.getStatus() && !keySound.getLoop())
-                                    {
-                                        keySound.play();
-                                    }
-                                    keyPlayed = true;
-                                }
-                            }
-                        }
-                    }
-                    else
-                    {
-                        inputLogic(charTyped);
-                    }
-                }
-            }
-        }
-    } else {
-        keyPlayed = false;
-        backPlayed = false;
-        keySound.stop();
-		backSpaceSound.stop();
-    }
+	if (input.type == sf::Event::TextEntered)
+	{
+		if (isSelected)
+		{
+			if (charTyped < 128)
+			{
+				if (charTyped == 8) // Backspace key
+				{
+					deleteLastChar();
+				}
+				else
+				{
+					if (hasLimit)
+					{
+						if (os.str().length() <= limit)
+						{
+							inputLogic(charTyped);
+						}
+					}
+					else
+					{
+						inputLogic(charTyped);
+					}
+				}
+			}
+		}
+	}
 
-    if (input.type == sf::Event::KeyPressed)
-    {
-        if (input.key.code == sf::Keyboard::Enter)
-        {
-            this->submission = os.str();
-            os.str("");
-            if (save)
-            {
-                saveToFile();
-            }
-        }
-    }
+	if (input.type == sf::Event::KeyPressed)
+	{
+		if (input.key.code == sf::Keyboard::Enter)
+		{
+			this->submission = os.str();
+			os.str("");
+			if (save)
+			{
+				saveToFile();
+			}
+		}
+	}
 }
 
 void Gui::TextBox::hoverLogic()

@@ -12,19 +12,12 @@ namespace Gui {
 	private:
 		sf::Text text;
 		sf::Font font;
-        sf::SoundBuffer backBuffer;
-        sf::SoundBuffer keyBuffer;
-        sf::Sound backSpaceSound;
-        sf::Sound keySound;
 		sf::RectangleShape box;
 		std::ostringstream os;
 		std::string submission;
 		int limit;
 		bool hasLimit;
 		bool isMouseOver;
-        bool keyPlayed;
-        bool backPlayed;
-        bool soundState;
 		bool save;
 		std::ofstream ofs;
 
@@ -40,10 +33,24 @@ namespace Gui {
 
 		TextBox();
 		~TextBox();
-		TextBox(bool save, bool hasLimit, int limit, int charSize, sf::Color TextColor, sf::Vector2f size, sf::Vector2f pos, bool soundState);
-		void create(bool save, bool hasLimit, int limit, int charSize, sf::Color TextColor, sf::Vector2f size, sf::Vector2f pos, bool soundState);
+		TextBox(bool save, bool hasLimit, int limit, int charSize, sf::Color TextColor, sf::Vector2f size, sf::Vector2f pos);
+		void create(bool save, bool hasLimit, int limit, int charSize, sf::Color TextColor, sf::Vector2f size, sf::Vector2f pos);
 	
-		void setFilePath(std::string path) { ofs.open(path, std::ios::app); }
+		/**
+		*	@name setFilePath
+		*	@param std::string path
+		*	@brief Set the file path for the text box.
+		*	@brief DO NOT WRITE FOLDER NAME IF FOLDER DOESNT EXIST!!!
+		*	@brief EXAMPLE: "folder/text.txt" This will only work if folder exists.
+		* @return void
+		**/
+		void setFilePath(std::string path) {
+			ofs.open(path, std::ios::app);
+
+			if (!ofs.is_open()) {
+				std::cerr << "Error opening file" << std::endl;
+			}
+		}
 
 		void update(sf::RenderWindow& target);
 

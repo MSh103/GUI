@@ -12,7 +12,6 @@ int main(int argc, const char* argv[])
 	sf::RenderWindow window(sf::VideoMode(1400, 800), "GUI CREATING");
 	sf::RenderWindow target;
     
-//    window.setFramerateLimit(60);
 
 	Gui::Button button(
 		"Quit",
@@ -77,11 +76,10 @@ int main(int argc, const char* argv[])
 		24,
 		sf::Color::Black,
 		{ 300, 100 },
-		{ 100, 100 },
-        true
+		{ 100, 100 }
 	);
 
-	textB.setFilePath("submissions.log");
+	textB.setFilePath("subs/submissions.log");
     
     std::stringstream ss;
     Gui::Text fpsText("FPS: ", {0,0}, 50, sf::Color::Red);
