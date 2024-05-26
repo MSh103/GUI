@@ -11,6 +11,8 @@ int main(int argc, const char* argv[])
 {
 	sf::RenderWindow window(sf::VideoMode(1400, 800), "GUI CREATING");
 	sf::RenderWindow target;
+    
+//    window.setFramerateLimit(60);
 
 	Gui::Button button(
 		"Quit",
@@ -80,12 +82,21 @@ int main(int argc, const char* argv[])
 	);
 
 	textB.setFilePath("submissions.log");
-
+    
+    std::stringstream ss;
+    Gui::Text fpsText("FPS: ", {0,0}, 50, sf::Color::Red);
 
 	bool running = true;
+    
+    float delta = 0.0001f;
+    sf::Clock deltaClock;
 
 	while (running)
 	{
+        float currentTime = deltaClock.restart().asSeconds();
+        float fps = 1.f / (currentTime);
+        delta = currentTime;
+        
 		sf::Event ev;
 		while (window.pollEvent(ev))
 		{
@@ -185,16 +196,21 @@ int main(int argc, const char* argv[])
 		}
 		sf::Event event;
 		while (target.pollEvent(event))
-		{
-			if (event.type == sf::Event::Closed)
-			{
-				target.close();
-			}
-			if (event.type == sf::Event::KeyPressed)
-			{
-				if (event.key.code == sf::Keyboard::Escape) { target.close(); }
-			}
-		}
+        {
+            if (event.type == sf::Event::Closed)
+            {
+                target.close();
+            }
+            if (event.type == sf::Event::KeyPressed)
+            {
+                if (event.key.code == sf::Keyboard::Escape) { target.close(); }
+            }
+        }
+        
+        ss.str("");
+        ss << "FPS: " << int(fps);
+        std::string tempText = ss.str();
+        fpsText.setString(tempText);
 
 		if (state == titleState)
 		{
@@ -281,6 +297,7 @@ int main(int argc, const char* argv[])
 
 			comboBox.render(window);
 			textB.render(window);
+            window.draw(fpsText.getText());
 
 			window.display();
 		}
