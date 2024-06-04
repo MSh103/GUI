@@ -12,6 +12,13 @@ int main(int argc, const char* argv[])
 	sf::RenderWindow window(sf::VideoMode(1400, 800), "GUI CREATING");
 	sf::RenderWindow target;
     
+	sf::Image winIcon;
+	if(!winIcon.loadFromFile("res/icons/logo.png"))
+	{
+		std::cerr << "Failed to load Window Icon!\n";
+	}
+	window.setIcon(winIcon.getSize().x, winIcon.getSize().y, winIcon.getPixelsPtr());
+	
 
 	Gui::Button button(
 		"Quit",
@@ -79,6 +86,8 @@ int main(int argc, const char* argv[])
 		{ 100, 100 }
 	);
 
+	sf::FloatRect resizeArea(0, 0, 1400, 800);
+
 	textB.setFilePath("subs/submissions.log");
     
     std::stringstream ss;
@@ -139,29 +148,33 @@ int main(int argc, const char* argv[])
 						if (comboBox.hoverButton[0])
 						{
 							comboBox.setTitle(0);
-							window.close();
-							window.create(sf::VideoMode(1920, 1080), "GUI CREATING");
-							window.setPosition({ 0, 0 });
+							window.setSize({ 1920, 1080 });
+							resizeArea = sf::FloatRect(0, 0, 1920, 1080);
+							window.setView(sf::View(resizeArea));
+							window.setPosition({0,0});
 							comboBox.setOpenState(false);
 						}
 						if (comboBox.hoverButton[1])
 						{
 							comboBox.setTitle(1);
-							window.close();
-							window.create(sf::VideoMode(1400, 800), "GUI CREATING");
+							window.setSize({ 1400, 800 });
+							resizeArea = sf::FloatRect(0, 0, 1400, 800);
+        					window.setView(sf::View(resizeArea));
 							window.setPosition(sf::Vector2i(
-								sf::VideoMode::getDesktopMode().width / 2 - (window.getSize().x / 2),
-								sf::VideoMode::getDesktopMode().height / 2 - (window.getSize().y / 2)
+								sf::VideoMode::getDesktopMode().width / 2 - 1400 / 2,
+								sf::VideoMode::getDesktopMode().height / 2 - 800 / 2
 							));
 							comboBox.setOpenState(false);
 						}
 						if (comboBox.hoverButton[2])
 						{
 							comboBox.setTitle(2);
-							window.create(sf::VideoMode(1280, 800), "GUI CREATING");
+							window.setSize({ 1280, 800 });
+							resizeArea = sf::FloatRect(0, 0, 1280, 800);
+							window.setView(sf::View(resizeArea));
 							window.setPosition(sf::Vector2i(
-								sf::VideoMode::getDesktopMode().width / 2 - (window.getSize().x / 2),
-								sf::VideoMode::getDesktopMode().height / 2 - (window.getSize().y / 2)
+								sf::VideoMode::getDesktopMode().width / 2 - 1280 / 2,
+								sf::VideoMode::getDesktopMode().height / 2 - 800 / 2
 							));
 							comboBox.setOpenState(false);
 						}
@@ -189,6 +202,11 @@ int main(int argc, const char* argv[])
 						state = titleState;
 					}
 				}
+			}
+			if(ev.type == sf::Event::Resized)
+			{
+				sf::FloatRect visibleArea(0, 0, ev.size.width, ev.size.height);
+        		window.setView(sf::View(visibleArea));
 			}
             textB.input(ev);
 		}
@@ -261,6 +279,7 @@ int main(int argc, const char* argv[])
 			button.update(window);
 			button2.update(window);
 
+
 			window.clear(sf::Color(100, 100, 255));
 
 			button.hoverLogic();
@@ -291,8 +310,8 @@ int main(int argc, const char* argv[])
 			textB.update(window);
 			comboBox.hoverLogic(sf::Color::Black, sf::Color(45, 45, 45), sf::Color(100, 100, 100), sf::Color(150, 150, 150));
 			textB.hoverLogic();
-			window.clear(sf::Color(100, 100, 255));
 
+			window.clear(sf::Color(100, 100, 255));
 			comboBox.render(window);
 			textB.render(window);
             window.draw(fpsText.getText());

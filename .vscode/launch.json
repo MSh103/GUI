@@ -1,0 +1,16 @@
+{
+    "configurations": [
+        {
+            "name": "Launch App",
+            "type": "cppdbg",
+            "request": "launch",
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/",
+            "environment": [],
+            "program": "${workspaceFolder}/Gui",
+            "MIMode": "lldb",
+            "targetArchitecture": "arm64",
+            "externalConsole": true
+        }
+    ]
+}
