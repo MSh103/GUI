@@ -1,6 +1,7 @@
-#pragma once
+#ifndef TEXT_HPP
+#define TEXT_HPP
 
-#include "globals.h"
+#include "../GLOBALS/globals.hpp"
 
 namespace Gui {
 
@@ -24,3 +25,5 @@ namespace Gui {
 	};
 
 }
+
+#endif // !TEXT_HPP

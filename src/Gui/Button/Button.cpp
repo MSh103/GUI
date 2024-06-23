@@ -1,4 +1,4 @@
-#include "Button.h"
+#include "Button.hpp"
 
 void Gui::Button::init()
 {

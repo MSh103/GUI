@@ -1,6 +1,7 @@
-#pragma once
+#ifndef TEXTBOX_HPP
+#define TEXTBOX_HPP
 
-#include "globals.h"
+#include "../GLOBALS/globals.hpp"
 
 #define DELETE_KEY 8
 #define ENTER_KEY 13
@@ -64,3 +65,5 @@ namespace Gui {
 	};
 
 }
+
+#endif // !TEXTBOX_HPP

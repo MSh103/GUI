@@ -1,4 +1,5 @@
-#pragma once
+#ifndef GLOBALS_HPP
+#define GLOBALS_HPP
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
@@ -8,3 +9,5 @@
 #include <SFML/System/String.hpp>
 #include <sstream>
 #include <fstream>
+
+#endif // !GLOBALS_HPP

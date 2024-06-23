@@ -1,7 +1,6 @@
-#include "Text.h"
-#include "Button.h"
-#include "ComboBox.h"
-#include "TextBox.h"
+#include "Gui/Gui.hpp"
+#include "Gui/ProgressBar/ProgressBar.hpp"
+
 
 int state = 0;
 int titleState = 0;
@@ -92,6 +91,19 @@ int main(int argc, const char* argv[])
     
     std::stringstream ss;
     Gui::Text fpsText("FPS: ", {0,0}, 50, sf::Color::Red);
+
+  Gui::ProgressBar pBar(0, 100);
+  pBar.setPosition({ 500, 500 });
+
+  Gui::Button pBarStartButton(
+    "Start",
+    sf::Vector2f( 400, 400 ),
+    {100, 75},
+    20,
+    sf::Color(72, 72, 72),
+    sf::Color::White,
+    sf::Color(100, 100, 100)
+  );
 
 	bool running = true;
     
@@ -185,6 +197,10 @@ int main(int argc, const char* argv[])
 						{
 							textB.isSelected = false;
 						}
+            if(pBarStartButton.isOver())
+            {
+              pBar.start();
+            }
 					}
 				}
 			}
@@ -279,7 +295,6 @@ int main(int argc, const char* argv[])
 			button.update(window);
 			button2.update(window);
 
-
 			window.clear(sf::Color(100, 100, 255));
 
 			button.hoverLogic();
@@ -306,15 +321,30 @@ int main(int argc, const char* argv[])
 		}
 		else if (state == optionsState)
 		{
+      pBarStartButton.update(window);
 			comboBox.update(window);
 			textB.update(window);
 			comboBox.hoverLogic(sf::Color::Black, sf::Color(45, 45, 45), sf::Color(100, 100, 100), sf::Color(150, 150, 150));
 			textB.hoverLogic();
+      pBarStartButton.hoverLogic();
+      if(!pBar.done)
+      {
+        if(pBar.getState())
+        {
+          for(int i = 0; i < 100; i++)
+          {
+            std::cout << i << '\n';
+            pBar.update(i);
+          }
+        }
+      }
 
 			window.clear(sf::Color(100, 100, 255));
 			comboBox.render(window);
 			textB.render(window);
             window.draw(fpsText.getText());
+      pBarStartButton.render(window);
+      pBar.render(window);
 
 			window.display();
 		}

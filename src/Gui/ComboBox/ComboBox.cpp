@@ -1,4 +1,4 @@
-#include "ComboBox.h"
+#include "ComboBox.hpp"
 
 void Gui::ComboBox::init()
 {

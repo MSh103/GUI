@@ -1,0 +1,86 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-c",
+      "-std=c++17",
+      "-I/opt/homebrew/include",
+      "-o",
+      "Gui",
+      "./src/Gui/MessageBox/MessageBoxA.cpp"
+    ],
+    "directory": "/Users/msh/dev/VISUAL_STUDIO_CODE_REPOS/Gui Development/GUI",
+    "file": "/Users/msh/dev/VISUAL_STUDIO_CODE_REPOS/Gui Development/GUI/src/Gui/MessageBox/MessageBoxA.cpp",
+    "output": "/Users/msh/dev/VISUAL_STUDIO_CODE_REPOS/Gui Development/GUI/Gui"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-c",
+      "-std=c++17",
+      "-I/opt/homebrew/include",
+      "-o",
+      "Gui",
+      "./src/Gui/ComboBox/ComboBox.cpp"
+    ],
+    "directory": "/Users/msh/dev/VISUAL_STUDIO_CODE_REPOS/Gui Development/GUI",
+    "file": "/Users/msh/dev/VISUAL_STUDIO_CODE_REPOS/Gui Development/GUI/src/Gui/ComboBox/ComboBox.cpp",
+    "output": "/Users/msh/dev/VISUAL_STUDIO_CODE_REPOS/Gui Development/GUI/Gui"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-c",
+      "-std=c++17",
+      "-I/opt/homebrew/include",
+      "-o",
+      "Gui",
+      "./src/Gui/Button/Button.cpp"
+    ],
+    "directory": "/Users/msh/dev/VISUAL_STUDIO_CODE_REPOS/Gui Development/GUI",
+    "file": "/Users/msh/dev/VISUAL_STUDIO_CODE_REPOS/Gui Development/GUI/src/Gui/Button/Button.cpp",
+    "output": "/Users/msh/dev/VISUAL_STUDIO_CODE_REPOS/Gui Development/GUI/Gui"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-c",
+      "-std=c++17",
+      "-I/opt/homebrew/include",
+      "-o",
+      "Gui",
+      "./src/Gui/Text/Text.cpp"
+    ],
+    "directory": "/Users/msh/dev/VISUAL_STUDIO_CODE_REPOS/Gui Development/GUI",
+    "file": "/Users/msh/dev/VISUAL_STUDIO_CODE_REPOS/Gui Development/GUI/src/Gui/Text/Text.cpp",
+    "output": "/Users/msh/dev/VISUAL_STUDIO_CODE_REPOS/Gui Development/GUI/Gui"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-c",
+      "-std=c++17",
+      "-I/opt/homebrew/include",
+      "-o",
+      "Gui",
+      "./src/Gui/TextBox/TextBox.cpp"
+    ],
+    "directory": "/Users/msh/dev/VISUAL_STUDIO_CODE_REPOS/Gui Development/GUI",
+    "file": "/Users/msh/dev/VISUAL_STUDIO_CODE_REPOS/Gui Development/GUI/src/Gui/TextBox/TextBox.cpp",
+    "output": "/Users/msh/dev/VISUAL_STUDIO_CODE_REPOS/Gui Development/GUI/Gui"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-c",
+      "-std=c++17",
+      "-I/opt/homebrew/include",
+      "-o",
+      "Gui",
+      "./src/main.cpp"
+    ],
+    "directory": "/Users/msh/dev/VISUAL_STUDIO_CODE_REPOS/Gui Development/GUI",
+    "file": "/Users/msh/dev/VISUAL_STUDIO_CODE_REPOS/Gui Development/GUI/src/main.cpp",
+    "output": "/Users/msh/dev/VISUAL_STUDIO_CODE_REPOS/Gui Development/GUI/Gui"
+  }
+]

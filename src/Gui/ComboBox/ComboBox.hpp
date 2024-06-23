@@ -1,6 +1,7 @@
-#pragma once
+#ifndef COMBOBOX_HPP
+#define COMBOBOX_HPP
 
-#include "globals.h"
+#include "../GLOBALS/globals.hpp"
 
 namespace Gui {
 
@@ -53,3 +54,5 @@ namespace Gui {
 	};
 
 }
+
+#endif // !COMBOBOX_HPP
