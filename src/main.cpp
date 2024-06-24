@@ -1,353 +1,223 @@
 #include "Gui/Gui.hpp"
-#include "Gui/ProgressBar/ProgressBar.hpp"
-
-
-int state = 0;
-int titleState = 0;
-int optionsState = 1;
 
 int main(int argc, const char* argv[])
 {
-	sf::RenderWindow window(sf::VideoMode(1400, 800), "GUI CREATING");
-	sf::RenderWindow target;
-    
-	sf::Image winIcon;
-	if(!winIcon.loadFromFile("res/icons/logo.png"))
-	{
-		std::cerr << "Failed to load Window Icon!\n";
-	}
-	window.setIcon(winIcon.getSize().x, winIcon.getSize().y, winIcon.getPixelsPtr());
-	
+	/////////WINDOW SHIT///////////////////////////////
+	sf::RenderWindow window(sf::VideoMode(1600, 820), "GUI DEVELOPMENT", sf::Style::Titlebar | sf::Style::Close);
 
-	Gui::Button button(
-		"Quit",
-		sf::Vector2f(50, window.getSize().y / 2.f + 120),
-		{ 500, 100 },
-		45,
-		sf::Color(100, 100, 255),
-		sf::Color::White,
-		sf::Color(255, 165, 0)
-	);
-
-	Gui::Button button1(
-		"Start",
-		sf::Vector2f(50, window.getSize().y / 2.f - 120),
-		{ 500, 100 },
-		45,
-		sf::Color(100, 100, 255),
-		sf::Color::White,
-		sf::Color(255, 165, 0)
-	);
-
-
-	Gui::Button button2(
-		"Options",
-		sf::Vector2f(50, window.getSize().y / 2.f),
-		{ 500, 100 },
-		45,
-		sf::Color(100, 100, 255),
-		sf::Color::White,
-		sf::Color(255, 165, 0)
-	);
-
-
-	Gui::Text title("Welcome Message!", { 50, 125 }, 75, sf::Color::White);
-
-
-	sf::CircleShape circle(200);
-	circle.setFillColor(sf::Color::Blue);
-
-	std::vector <std::string> options = {
-		"1920 / 1080",
-		"1400 / 800",
-		"1280 / 800",
-	};
-
-	Gui::ComboBox comboBox(
-		int(options.size()),
-		sf::Vector2f(window.getSize().x / 2.f + 50, 100),
-		options,
-		{ 250, 80 },
-		"Select...",
-		sf::Color::Black,
-		sf::Color(100, 100, 100),
-		0,
-		0
-	);
-
-	Gui::TextBox textB(
-		true,
-		true,
-		20,
-		24,
-		sf::Color::Black,
-		{ 300, 100 },
-		{ 100, 100 }
-	);
-
-	sf::FloatRect resizeArea(0, 0, 1400, 800);
-
-	textB.setFilePath("subs/submissions.log");
-    
-    std::stringstream ss;
-    Gui::Text fpsText("FPS: ", {0,0}, 50, sf::Color::Red);
-
-  Gui::ProgressBar pBar(0, 100);
-  pBar.setPosition({ 500, 500 });
-
-  Gui::Button pBarStartButton(
-    "Start",
-    sf::Vector2f( 400, 400 ),
-    {100, 75},
-    20,
-    sf::Color(72, 72, 72),
-    sf::Color::White,
-    sf::Color(100, 100, 100)
-  );
+	sf::Image icon;
+	if(!icon.loadFromFile("res/icons/logo.png"))
+		std::cerr << "ERR::INIT::WINDOW::ICON::Failed to load window icon.\n";
+	window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 
 	bool running = true;
-    
-    float delta = 0.0001f;
-    sf::Clock deltaClock;
+	///////////////////////////////////////////////////
 
-	while (running)
+	////////BUTTON EXAMPLE/////////////////////////////
+	sf::RectangleShape bg1(sf::Vector2f(300, 150));
+	bg1.setFillColor(sf::Color::White);
+	bg1.setOutlineColor(sf::Color::Black);
+	bg1.setOutlineThickness(5.5);
+	bg1.setPosition({ 100, 150 });
+	Gui::Text bg1Title("Button Example:", { 190, 100 }, 20, sf::Color::White);
+	Gui::Button button(
+		"Button",
+		sf::Vector2f(125, 175),
+		{ 250, 100 },
+		20,
+		sf::Color::Black,
+		sf::Color::White,
+		sf::Color(72, 72, 72)
+	);
+	sf::RectangleShape term(sf::Vector2f(300, 400));
+	term.setFillColor(sf::Color::Black);
+	term.setOutlineColor(sf::Color(60, 60, 60));
+	term.setOutlineThickness(5.5);
+	term.setPosition({ 100, 350 });
+	Gui::Text termText("", { 110, 360 }, 20, sf::Color::Green);
+	std::stringstream tss; // TSS = term string stream
+	////////////////////////////////////////////////////
+
+	////////TEXT EXAMPLE////////////////////////////////
+	sf::RectangleShape bg2(sf::Vector2f(300, 150));
+	bg2.setFillColor(sf::Color::White);
+	bg2.setOutlineColor(sf::Color::Black);
+	bg2.setOutlineThickness(5.5);
+	bg2.setPosition({ 450, 150 });
+	Gui::Text bg2Title("Text Example:", { 535, 100 }, 20, sf::Color::White);
+	Gui::Text text("Text", { bg2.getPosition() + bg2.getSize() / 2.f }, 20, sf::Color::Black);
+	text.setOrigin(text.getText().getGlobalBounds().getSize() / 2.f);
+	////////////////////////////////////////////////////
+
+	////////COMBO-BOX EXAMPLE///////////////////////////
+	std::vector<std::string> options = {
+		"Option 1",
+		"Option 2",
+		"Option 3",
+	};
+	sf::RectangleShape bg3(sf::Vector2f(300, 400));
+	bg3.setFillColor(sf::Color::White);
+	bg3.setOutlineColor(sf::Color::Black);
+	bg3.setOutlineThickness(5.5f);
+	bg3.setPosition({ 800, 150 });
+	Gui::Text bg3Title("Combo-Box Example:", sf::Vector2f(855, 100), 20, sf::Color::White);
+	Gui::ComboBox cBox(
+		3,
+		sf::Vector2f( 815, 170 ),
+		options,
+		{ 270, 75 },
+		"Select an option..",
+		sf::Color::Black,
+		sf::Color(72, 72, 72),
+		20
+	);
+	sf::RectangleShape term2(sf::Vector2f(300, 400));
+	term2.setFillColor(sf::Color::Black);
+	term2.setOutlineColor(sf::Color(60, 60, 60));
+	term2.setOutlineThickness(5.5f);
+	term2.setPosition({ 1150, 150 });
+	Gui::Text term2Text("", { 1160, 160 }, 20, sf::Color::Green);
+	std::stringstream t2ss;	// t2ss = Term 2 StringStream
+	////////////////////////////////////////////////////
+
+	while(running)
 	{
-        float currentTime = deltaClock.restart().asSeconds();
-        float fps = 1.f / (currentTime);
-        delta = currentTime;
-        
 		sf::Event ev;
 		while (window.pollEvent(ev))
 		{
-			if (ev.type == sf::Event::Closed)
+			if(ev.type == sf::Event::Closed)
 			{
 				window.close();
 				running = false;
 			}
-			if (ev.type == sf::Event::MouseButtonPressed)
+			if(ev.type == sf::Event::KeyPressed)
 			{
-				if (ev.mouseButton.button == sf::Mouse::Left)
-				{
-					if (state == titleState)
-					{
-						if (button.isOver())
-						{
-							window.close();
-							running = false;
-						}
-						if (button1.isOver())
-						{
-							target.create(sf::VideoMode(400, 400), "TEST");
-							target.setPosition(sf::Vector2i(
-								sf::VideoMode::getDesktopMode().width - 400,
-								0
-							));
-						}
-						if (button2.isOver())
-						{
-							state = optionsState;
-						}
-					}
-					else if (state == optionsState)
-					{
-						if (comboBox.isOver() && !comboBox.isOpen())
-						{
-							comboBox.setOpenState(true);
-						}
-						else if(comboBox.isOver() && comboBox.isOpen()) {
-							comboBox.setOpenState(false);
-						}
-						if (comboBox.hoverButton[0])
-						{
-							comboBox.setTitle(0);
-							window.setSize({ 1920, 1080 });
-							resizeArea = sf::FloatRect(0, 0, 1920, 1080);
-							window.setView(sf::View(resizeArea));
-							window.setPosition({0,0});
-							comboBox.setOpenState(false);
-						}
-						if (comboBox.hoverButton[1])
-						{
-							comboBox.setTitle(1);
-							window.setSize({ 1400, 800 });
-							resizeArea = sf::FloatRect(0, 0, 1400, 800);
-        					window.setView(sf::View(resizeArea));
-							window.setPosition(sf::Vector2i(
-								sf::VideoMode::getDesktopMode().width / 2 - 1400 / 2,
-								sf::VideoMode::getDesktopMode().height / 2 - 800 / 2
-							));
-							comboBox.setOpenState(false);
-						}
-						if (comboBox.hoverButton[2])
-						{
-							comboBox.setTitle(2);
-							window.setSize({ 1280, 800 });
-							resizeArea = sf::FloatRect(0, 0, 1280, 800);
-							window.setView(sf::View(resizeArea));
-							window.setPosition(sf::Vector2i(
-								sf::VideoMode::getDesktopMode().width / 2 - 1280 / 2,
-								sf::VideoMode::getDesktopMode().height / 2 - 800 / 2
-							));
-							comboBox.setOpenState(false);
-						}
-						if (textB.isOver())
-						{
-							textB.isSelected = true;
-						} else if (textB.isOver() == false)
-						{
-							textB.isSelected = false;
-						}
-            if(pBarStartButton.isOver())
-            {
-              pBar.start();
-            }
-					}
-				}
-			}
-			if (ev.type == sf::Event::KeyPressed)
-			{
-				if (ev.key.code == sf::Keyboard::F11)
+				if(ev.key.code == sf::Keyboard::Escape)
 				{
 					window.close();
-					window.create(sf::VideoMode::getDesktopMode(), "GUI CREATING", sf::Style::Fullscreen);
+					running = false;
 				}
-				if (state == optionsState)
+			}
+			if(ev.type == sf::Event::MouseButtonPressed)
+			{
+				///////BUTTON CLICKING//////////////////////
+				if(ev.mouseButton.button == sf::Mouse::Left)
 				{
-					if (ev.key.code == sf::Keyboard::Escape)
+					if(button.isOver())
 					{
-						state = titleState;
+						tss << "Button is clicked\n";
 					}
 				}
-			}
-			if(ev.type == sf::Event::Resized)
-			{
-				sf::FloatRect visibleArea(0, 0, ev.size.width, ev.size.height);
-        		window.setView(sf::View(visibleArea));
-			}
-            textB.input(ev);
-		}
-		sf::Event event;
-		while (target.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-            {
-                target.close();
-            }
-            if (event.type == sf::Event::KeyPressed)
-            {
-                if (event.key.code == sf::Keyboard::Escape) { target.close(); }
-            }
-        }
-        
-        ss.str("");
-        ss << "FPS: " << int(fps);
-        std::string tempText = ss.str();
-        fpsText.setString(tempText);
+				////////////////////////////////////////////
 
-		if (state == titleState)
+				///////COMBO-BOX CLICKING///////////////////
+				if(ev.mouseButton.button == sf::Mouse::Left)
+				{
+					if(cBox.isOver())
+					{
+						cBox.setOpenState(!cBox.isOpen());
+					}
+					if(cBox.hoverButton[0])
+					{
+						cBox.setTitle(0);
+						t2ss << "Option 1 is clicked\n";
+					}
+					if(cBox.hoverButton[1])
+					{
+						cBox.setTitle(1);
+						t2ss << "Option 2 is clicked\n";
+					}
+					if(cBox.hoverButton[2])
+					{
+						cBox.setTitle(2);
+						t2ss << "Option 3 is clicked\n";
+					}
+				}
+				////////////////////////////////////////////
+			}
+			if(ev.type == sf::Event::MouseMoved)
+			{
+				///////BUTTON HOVERING//////////////////////
+				if(button.isOver())
+				{
+					tss << "Button is being hovered\n";
+				}
+				////////////////////////////////////////////
+
+				///////COMBO-BOX HOVERING///////////////////
+				if(cBox.isOpen())
+				{
+					// WARNING: Can be glitchy
+					if(cBox.hoverButton[0])
+					{
+						t2ss << "Option 1 is being hovered\n";
+					}
+					if(cBox.hoverButton[1])
+					{
+						t2ss << "Option 2 is being hovered\n";
+					}
+					if(cBox.hoverButton[3])
+					{
+						t2ss << "Option 3 is being hovered\n";
+					}
+				}
+				////////////////////////////////////////////
+			}
+		}
+
+		//////////UPDATE////////////////////
+		button.update(window);
+		button.hoverLogic();
+		if(tss.str().length() > 290)
 		{
-			if (button.isOver())
-			{
-				button.setTextPosition(sf::Vector2f(
-					(button.getButtonPosition().x + 100.f) + 50.f,
-					button.getButtonPosition().y + 30.f
-				));
-			}
-			else {
-				button.setTextPosition(sf::Vector2f(
-					button.getButtonPosition().x + 100.f,
-					button.getButtonPosition().y + 30.f
-				));
-			}
-
-			if (button1.isOver())
-			{
-				button1.setTextPosition(sf::Vector2f(
-					(button1.getButtonPosition().x + 100.f) + 50.f,
-					button1.getButtonPosition().y + 30.f
-				));
-			}
-			else {
-				button1.setTextPosition(sf::Vector2f(
-					button1.getButtonPosition().x + 110.f,
-					button1.getButtonPosition().y + 30.f
-				));
-			}
-
-			if (button2.isOver())
-			{
-				button2.setTextPosition(sf::Vector2f(
-					(button2.getButtonPosition().x + 100.f) + 50.f,
-					button2.getButtonPosition().y + 30.f
-				));
-			}
-			else {
-				button2.setTextPosition(sf::Vector2f(
-					button2.getButtonPosition().x + 130.f,
-					button2.getButtonPosition().y + 30.f
-				));
-			}
+			tss.str("");
 		}
-
-		if (state == titleState)
+		std::string temp = tss.str();
+		termText.setString(temp);
+		cBox.update(window);
+		cBox.hoverLogic(sf::Color::Black, sf::Color(50, 50, 50), sf::Color(72, 72, 72), sf::Color(90, 90, 90));
+		if(t2ss.str().length() > 310)
 		{
-			button1.update(window);
-			button.update(window);
-			button2.update(window);
-
-			window.clear(sf::Color(100, 100, 255));
-
-			button.hoverLogic();
-			button1.hoverLogic();
-			button2.hoverLogic();
-			button1.render(window);
-			button.render(window);
-			button2.render(window);
-			window.draw(title.getText());
-
-			window.display();
-
-			target.clear(sf::Color::Magenta);
-
-			circle.setOrigin(circle.getLocalBounds().getSize() / 2.f);
-			circle.setPosition(sf::Vector2f(
-				target.getSize().x / 2.f,
-				target.getSize().y / 2.f
-			));
-
-			target.draw(circle);
-
-			target.display();
+			t2ss.str("");
 		}
-		else if (state == optionsState)
-		{
-      pBarStartButton.update(window);
-			comboBox.update(window);
-			textB.update(window);
-			comboBox.hoverLogic(sf::Color::Black, sf::Color(45, 45, 45), sf::Color(100, 100, 100), sf::Color(150, 150, 150));
-			textB.hoverLogic();
-      pBarStartButton.hoverLogic();
-      if(!pBar.done)
-      {
-        if(pBar.getState())
-        {
-          for(int i = 0; i < 100; i++)
-          {
-            std::cout << i << '\n';
-            pBar.update(i);
-          }
-        }
-      }
+		std::string temp2 = t2ss.str();
+		term2Text.setString(temp2);
+		////////////////////////////////////
 
-			window.clear(sf::Color(100, 100, 255));
-			comboBox.render(window);
-			textB.render(window);
-            window.draw(fpsText.getText());
-      pBarStartButton.render(window);
-      pBar.render(window);
+		/////////CLEARING///////////////////
+		window.clear(sf::Color(72, 72, 72));
+		////////////////////////////////////
 
-			window.display();
-		}
+		///////RENDERING////////////////////
+
+		//////BUTTON EXAMPLE////////////////
+		window.draw(bg1);
+		window.draw(bg1Title.getText());
+		button.render(window);
+		window.draw(term);
+		window.draw(termText.getText());
+		////////////////////////////////////
+
+		//////TEXT EXAMPLE//////////////////
+		window.draw(bg2);
+		window.draw(bg2Title.getText());
+		window.draw(text.getText());
+		////////////////////////////////////
+		
+		//////COMBO-BOX EXAMPLE/////////////
+		window.draw(bg3);
+		window.draw(bg3Title.getText());
+		cBox.render(window);
+		window.draw(term2);
+		window.draw(term2Text.getText());
+		////////////////////////////////////
+
+		////////////////////////////////////
+
+		//////CHG OF BUFFERS////////////////
+		window.display();
+		////////////////////////////////////
+		
 	}
 
 	return 0;

@@ -44,6 +44,7 @@ namespace Gui {
 
 		sf::Vector2f getButtonPosition() { return bg.getPosition(); }
 
+		sf::Text getText() { return fg; }
 	};
 
 }

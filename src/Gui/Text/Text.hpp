@@ -19,6 +19,8 @@ namespace Gui {
 		void create(std::string msg, sf::Vector2f pos, int charSize, sf::Color color);
 
 		sf::Text getText() { return text; }
+
+		void setOrigin(sf::Vector2f origin) { text.setOrigin(origin); }
         
         void setString(std::string& msg) {text.setString(msg);}
 

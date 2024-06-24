@@ -7,7 +7,6 @@ void Gui::ComboBox::init()
 		std::cerr << "Failed to load Font!\n";
 	}
 	ComboBoxTitle.setFont(font);
-	ComboBoxTitle.setCharacterSize(45);
 
 	if (!buffer.loadFromFile("res/sfx/buttonhover.wav"))
 	{
@@ -23,7 +22,7 @@ Gui::ComboBox::ComboBox()
 {
 }
 
-Gui::ComboBox::ComboBox(int noOptions, sf::Vector2f pos, std::vector<std::string> options, sf::Vector2f size, std::string defaultOption, sf::Color MainButton, sf::Color SubButtons, float paddingX, float paddingY)
+Gui::ComboBox::ComboBox(int noOptions, sf::Vector2f pos, std::vector<std::string> options, sf::Vector2f size, std::string defaultOption, sf::Color MainButton, sf::Color SubButtons, int charSize)
 {
 	init();
 	this->noOfOptions = noOptions;
@@ -41,9 +40,9 @@ Gui::ComboBox::ComboBox(int noOptions, sf::Vector2f pos, std::vector<std::string
 		soundPlayedForButtons.push_back(false);
 	}
 
-	bg.setSize({ this->size.x + paddingX, this->size.y + paddingY });
+	bg.setSize({ this->size.x, this->size.y });
 	bg.setFillColor(MainButton);
-	bg.setPosition({ this->pos.x - (paddingX / 2.f), this->pos.y - (paddingY / 2.f) });
+	bg.setPosition({ this->pos.x, this->pos.y});
 
 	ComboBoxTitle.setPosition(sf::Vector2f(
 		pos.x + (size.x / 2.f),
@@ -62,7 +61,7 @@ Gui::ComboBox::ComboBox(int noOptions, sf::Vector2f pos, std::vector<std::string
 			pos.y + (i + 1) * size.y
 		));
 		text.setFont(font);
-		text.setCharacterSize(45);
+		text.setCharacterSize(charSize);
 		if (!this->options.empty() && i < this->options.size()) {
 			text.setString(this->options[i]);
 		}
@@ -74,12 +73,11 @@ Gui::ComboBox::ComboBox(int noOptions, sf::Vector2f pos, std::vector<std::string
 	}
 
 	ComboBoxTitle.setString(defaultOption);
-
+	ComboBoxTitle.setCharacterSize(charSize);
 	ComboBoxTitle.setOrigin(ComboBoxTitle.getLocalBounds().getSize() / 2.f);
-
 }
 
-void Gui::ComboBox::create(int noOptions, sf::Vector2f pos, std::vector<std::string> options, sf::Vector2f size, std::string defaultOption, sf::Color MainButton, sf::Color SubButtons, float paddingX, float paddingY)
+void Gui::ComboBox::create(int noOptions, sf::Vector2f pos, std::vector<std::string> options, sf::Vector2f size, std::string defaultOption, sf::Color MainButton, sf::Color SubButtons, int charSize)
 {
 	init();
 	this->noOfOptions = noOptions;
@@ -97,9 +95,9 @@ void Gui::ComboBox::create(int noOptions, sf::Vector2f pos, std::vector<std::str
 		soundPlayedForButtons.push_back(false);
 	}
 
-	bg.setSize({ this->size.x + paddingX, this->size.y + paddingY });
+	bg.setSize({ this->size.x, this->size.y });
 	bg.setFillColor(MainButton);
-	bg.setPosition({ this->pos.x - (paddingX / 2.f), this->pos.y - (paddingY / 2.f) });
+	bg.setPosition({ this->pos.x, this->pos.y});
 
 	ComboBoxTitle.setPosition(sf::Vector2f(
 		pos.x + (size.x / 2.f),
@@ -118,7 +116,7 @@ void Gui::ComboBox::create(int noOptions, sf::Vector2f pos, std::vector<std::str
 			pos.y + (i + 1) * size.y
 		));
 		text.setFont(font);
-		text.setCharacterSize(45);
+		text.setCharacterSize(charSize);
 		if (!this->options.empty() && i < this->options.size()) {
 			text.setString(this->options[i]);
 		}
@@ -130,9 +128,8 @@ void Gui::ComboBox::create(int noOptions, sf::Vector2f pos, std::vector<std::str
 	}
 
 	ComboBoxTitle.setString(defaultOption);
-
+	ComboBoxTitle.setCharacterSize(charSize);
 	ComboBoxTitle.setOrigin(ComboBoxTitle.getLocalBounds().getSize() / 2.f);
-
 }
 
 void Gui::ComboBox::update(sf::RenderWindow& target)

@@ -29,8 +29,8 @@ namespace Gui {
 	public:
 
 		ComboBox();
-		ComboBox(int noOptions, sf::Vector2f pos, std::vector<std::string> options, sf::Vector2f size, std::string defaultOption, sf::Color MainButton, sf::Color SubButtons, float paddingX, float paddingY);
-		void create(int noOptions, sf::Vector2f pos, std::vector<std::string> options, sf::Vector2f size, std::string defaultOption, sf::Color MainButton, sf::Color SubButtons, float paddingX, float paddingY);
+		ComboBox(int noOptions, sf::Vector2f pos, std::vector<std::string> options, sf::Vector2f size, std::string defaultOption, sf::Color MainButton, sf::Color SubButtons, int charSize);
+		void create(int noOptions, sf::Vector2f pos, std::vector<std::string> options, sf::Vector2f size, std::string defaultOption, sf::Color MainButton, sf::Color SubButtons, int charSize);
 
 		void update(sf::RenderWindow& target);
 
@@ -51,6 +51,9 @@ namespace Gui {
 		void setMainTextColor(sf::Color color);
 
 		void setSubTextColor(sf::Color color);
+
+		void setTitleCharSize(int size) { ComboBoxTitle.setCharacterSize(size); }
+		std::vector<sf::Text> getOptionsText() { return list; }
 	};
 
 }

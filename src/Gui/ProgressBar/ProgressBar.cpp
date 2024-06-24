@@ -46,12 +46,16 @@ void ProgressBar::update(int currentValue)
       progressLevel,
       progress.getSize().y
     ));
+    std::cout << "Width: " << progress.getSize().x << "\nHeight: " << progress.getSize().y << '\n';
+    progress.setFillColor(sf::Color::Green);
     } else {
       progress.setSize(sf::Vector2f(
         100,
         progress.getSize().y
       ));
       done = true;
+      run = false;
+      std::cout << done << "\n" << run;
     }
   } else {
 
