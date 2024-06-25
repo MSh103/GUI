@@ -3,7 +3,8 @@
 int main(int argc, const char* argv[])
 {
 	/////////WINDOW SHIT///////////////////////////////
-	sf::RenderWindow window(sf::VideoMode(1600, 820), "GUI DEVELOPMENT", sf::Style::Titlebar | sf::Style::Close);
+	sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "GUI DEVELOPMENT", sf::Style::None);
+	window.setPosition(sf::Vector2i(0, 0));
 
 	sf::Image icon;
 	if(!icon.loadFromFile("res/icons/logo.png"))
@@ -79,6 +80,8 @@ int main(int argc, const char* argv[])
 	Gui::Text term2Text("", { 1160, 160 }, 20, sf::Color::Green);
 	std::stringstream t2ss;	// t2ss = Term 2 StringStream
 	////////////////////////////////////////////////////
+
+
 
 	while(running)
 	{
