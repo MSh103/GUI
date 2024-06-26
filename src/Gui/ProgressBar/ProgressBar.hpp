@@ -10,8 +10,6 @@ class ProgressBar
 private:  
   sf::RectangleShape emptyBar;
   sf::RectangleShape progress;
-  int progressLevel;
-  bool run = false;
 
   void init();
 
@@ -21,14 +19,11 @@ public:
   void create(int currentValue, int maxValue);
 
   void setPosition(sf::Vector2f pos);
-  void start();
 
-  bool getState() { return run; }
+  void setValue(int value);
 
-  void update(int currentValue);
   void render(sf::RenderWindow& target);
   
-  bool done = false;
 };
 
 }

@@ -1,10 +1,12 @@
 #include "Gui/Gui.hpp"
+#include "Gui/ProgressBar/ProgressBar.hpp"
 
 int main(int argc, const char* argv[])
 {
 	/////////WINDOW SHIT///////////////////////////////
 	sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "GUI DEVELOPMENT", sf::Style::None);
 	window.setPosition(sf::Vector2i(0, 0));
+	window.setFramerateLimit(60);
 
 	sf::Image icon;
 	if(!icon.loadFromFile("res/icons/logo.png"))
@@ -81,10 +83,24 @@ int main(int argc, const char* argv[])
 	std::stringstream t2ss;	// t2ss = Term 2 StringStream
 	////////////////////////////////////////////////////
 
-
+	///////PROGRESS-BAR EXAMPLE/////////////////////////
+	sf::RectangleShape bg4(sf::Vector2f(300, 150));
+	bg4.setFillColor(sf::Color::White);
+	bg4.setOutlineColor(sf::Color::Black);
+	bg4.setOutlineThickness(5.5);
+	bg4.setPosition(sf::Vector2f(450, 350));
+	Gui::Text bg4Title("Progress Bar Example:", { 495, 310 }, 20, sf::Color::White);
+	Gui::ProgressBar pBar(0, 100);
+	pBar.setPosition(sf::Vector2f(
+		535,
+		410
+	));
+	float i = 0;
+	////////////////////////////////////////////////////
 
 	while(running)
 	{
+		pBar.setValue(int(i));
 		sf::Event ev;
 		while (window.pollEvent(ev))
 		{
@@ -215,12 +231,24 @@ int main(int argc, const char* argv[])
 		window.draw(term2Text.getText());
 		////////////////////////////////////
 
+		//////PROGRESS-BAR EXAMPLE//////////
+		window.draw(bg4);
+		window.draw(bg4Title.getText());
+		pBar.render(window);
+		////////////////////////////////////
+
 		////////////////////////////////////
 
 		//////CHG OF BUFFERS////////////////
 		window.display();
 		////////////////////////////////////
 		
+		if(i < 100)
+		{
+			i += 0.1;
+		} else {
+			i = 100;
+		}
 	}
 
 	return 0;
