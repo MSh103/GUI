@@ -5,5 +5,6 @@
 #include "ComboBox/ComboBox.hpp"
 #include "Text/Text.hpp"
 #include "TextBox/TextBox.hpp"
+#include "ProgressBar/ProgressBar.hpp"
 
 #endif // !GUI_HPP

@@ -1,5 +1,5 @@
 #include "Gui/Gui.hpp"
-#include "Gui/ProgressBar/ProgressBar.hpp"
+#include "Gui/MessageBox/MessageBox.hpp"
 
 int main(int argc, const char* argv[])
 {
