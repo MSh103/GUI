@@ -3,10 +3,8 @@
 
 #ifdef _WIN32
 #include "WINDOWS/MessageBoxForWindows.hpp"
-#elif _WIN64
-#include "WINDOWS/MessageBoxForWindows.hpp"
-#elif __APPLE__ || __MACH__
-//TO-DO
+#elif TARGET_OS_MAC
+#include "MACOS/MessageBoxForMACOS.hpp"
 #elif __linux__
 //TO-DO
 #endif

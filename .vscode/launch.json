@@ -10,7 +10,7 @@
             "program": "${workspaceFolder}/Gui",
             "MIMode": "lldb",
             "targetArchitecture": "arm64",
-            "externalConsole": true
+            "externalConsole": false
         }
     ]
 }

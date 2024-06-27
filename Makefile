@@ -18,6 +18,7 @@ endif
 
 # Replace "src" with the name of the folder where all your cpp code is
 cppFileNames := $(shell find ./src -type f -name "*.cpp")
+objcppFileNames := $(shell find ./src -name "*.mm")
 
 all: compile
 
@@ -26,12 +27,5 @@ compile:
 ifeq ($(OS), Windows_NT)
 	g++ -std=c++17 $(cppFileNames) -I$(INCLUDE_PATH) -o Gui -L$(SFML_PATH) -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio -lwinmm -lgdi32 -lole32 -lwinpthread -IC:\\msys64\\usr\\include\\win32 -LC:\\msys64\\usr\\lib\\win32
 else
-	UNAME_S := $(shell uname -s)
-	# For Linux
-	ifeq($(UNAME_S), Linux)
-		g++ -std=c++17 $(cppFileNames) -I$(INCLUDE_PATH) -o Gui -L$(SFML_PATH) -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
-	endif
-	ifeq($(UNAME_S), Darwin)
-		g++ -std=c++17 $(cppFileNames) -I$(INCLUDE_PATH) -o Gui -L$(SFML_PATH) -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
-	endif
+	g++ -std=c++17 $(cppFileNames) $(objcppFileNames) -I$(INCLUDE_PATH) -o Gui -L$(SFML_PATH) -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio -framework CoreFoundation
 endif

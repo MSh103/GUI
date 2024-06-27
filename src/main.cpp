@@ -4,7 +4,7 @@
 int main(int argc, const char* argv[])
 {
 	/////////WINDOW SHIT///////////////////////////////
-	sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "GUI DEVELOPMENT", sf::Style::None);
+	sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "GUI DEVELOPMENT", sf::Style::Fullscreen);
 	window.setPosition(sf::Vector2i(0, 0));
 	window.setFramerateLimit(60);
 
@@ -36,8 +36,8 @@ int main(int argc, const char* argv[])
 	term.setFillColor(sf::Color::Black);
 	term.setOutlineColor(sf::Color(60, 60, 60));
 	term.setOutlineThickness(5.5);
-	term.setPosition({ 100, 350 });
-	Gui::Text termText("", { 110, 360 }, 20, sf::Color::Green);
+	term.setPosition({ 800, 150 });
+	Gui::Text termText("", { 810, 160 }, 20, sf::Color::Green);
 	std::stringstream tss; // TSS = term string stream
 	////////////////////////////////////////////////////
 
@@ -46,8 +46,8 @@ int main(int argc, const char* argv[])
 	bg2.setFillColor(sf::Color::White);
 	bg2.setOutlineColor(sf::Color::Black);
 	bg2.setOutlineThickness(5.5);
-	bg2.setPosition({ 450, 150 });
-	Gui::Text bg2Title("Text Example:", { 535, 100 }, 20, sf::Color::White);
+	bg2.setPosition({ 100, 350 });
+	Gui::Text bg2Title("Text Example:", sf::Vector2f(bg2.getPosition().x + 90, bg2.getPosition().y - 40), 20, sf::Color::White);
 	Gui::Text text("Text", { bg2.getPosition() + bg2.getSize() / 2.f }, 20, sf::Color::Black);
 	text.setOrigin(text.getText().getGlobalBounds().getSize() / 2.f);
 	////////////////////////////////////////////////////
@@ -62,11 +62,14 @@ int main(int argc, const char* argv[])
 	bg3.setFillColor(sf::Color::White);
 	bg3.setOutlineColor(sf::Color::Black);
 	bg3.setOutlineThickness(5.5f);
-	bg3.setPosition({ 800, 150 });
-	Gui::Text bg3Title("Combo-Box Example:", sf::Vector2f(855, 100), 20, sf::Color::White);
+	bg3.setPosition({ 100, 550 });
+	Gui::Text bg3Title("Combo-Box Example:", sf::Vector2f(bg3.getPosition().x + 55, bg3.getPosition().y - 40), 20, sf::Color::White);
 	Gui::ComboBox cBox(
 		3,
-		sf::Vector2f( 815, 170 ),
+		sf::Vector2f(
+			 bg3.getPosition().x + (bg3.getSize().x / 2.f  - 275 / 2.f),
+			 bg3.getPosition().y + (bg3.getSize().y / 2.f - 175) 
+			),
 		options,
 		{ 270, 75 },
 		"Select an option..",
@@ -88,14 +91,42 @@ int main(int argc, const char* argv[])
 	bg4.setFillColor(sf::Color::White);
 	bg4.setOutlineColor(sf::Color::Black);
 	bg4.setOutlineThickness(5.5);
-	bg4.setPosition(sf::Vector2f(450, 350));
-	Gui::Text bg4Title("Progress Bar Example:", { 495, 310 }, 20, sf::Color::White);
+	bg4.setPosition(sf::Vector2f(450, 150));
+	Gui::Text bg4Title("Progress Bar Example:", sf::Vector2f(bg4.getPosition().x + 50, bg4.getPosition().y - 50), 20, sf::Color::White);
 	Gui::ProgressBar pBar(0, 100);
 	pBar.setPosition(sf::Vector2f(
-		535,
-		410
+		bg4.getPosition().x + (bg4.getSize().x / 2.f - 1.25*100/2.f),
+		bg4.getPosition().y + (bg4.getSize().y / 2.f - 0.25*100/2.f)
 	));
 	float i = 0;
+	////////////////////////////////////////////////////
+
+	///////MESSAGE-BOX EXAMPLE//////////////////////////
+	sf::RectangleShape bg5(sf::Vector2f(300, 150));
+	bg5.setFillColor(sf::Color::White);
+	bg5.setOutlineColor(sf::Color::Black);
+	bg5.setOutlineThickness(5.5f);
+	bg5.setPosition(sf::Vector2f(450, 350));
+	Gui::Text bg5Title("Message Box Example:", sf::Vector2f(bg5.getPosition().x + 40, bg5.getPosition().y - 40), 20, sf::Color::White);
+	Gui::Button showMBox(
+		"Click to show MessageBox",
+		sf::Vector2f(
+			bg5.getPosition().x + (bg5.getSize().x / 2.f - 250/2.f),
+			bg5.getPosition().y + (bg5.getSize().y / 2.f - 100/2.f)
+		),
+		{ 250, 100 },
+		20,
+		sf::Color::Black,
+		sf::Color::White,
+		sf::Color(72, 72, 72)
+	);
+	sf::RectangleShape term3(sf::Vector2f(300, 400));
+	term3.setFillColor(sf::Color::Black);
+	term3.setOutlineColor(sf::Color(60, 60, 60));
+	term3.setOutlineThickness(5.5f);
+	term3.setPosition({ 1150, 600 });
+	Gui::Text term3Text("", {1160, 610 }, 20, sf::Color::Green);
+	std::stringstream tts3; // tts3 = Term Text String 3
 	////////////////////////////////////////////////////
 
 	while(running)
@@ -153,6 +184,19 @@ int main(int argc, const char* argv[])
 					}
 				}
 				////////////////////////////////////////////
+
+				//////MESSAGE-BOX HANDLING//////////////////
+				if(showMBox.isOver())
+				{
+					#ifdef _WIN32
+						Gui::MessageBoxM mBoxW("Title", "Message", MB_OK | MB_CANCEL | MB_ICONINFORMATION);
+						tts3 << mBoxW.getChoice() << "\n";
+					#elif TARGET_OS_MAC
+						Gui::MessageBoxM mBoxM("Header", "Message", MB_OK | MB_CANCEL | MB_ICONINFORMATION);
+						tts3 << mBoxM.getChoice() << "\n";
+					#endif
+				}
+				////////////////////////////////////////////
 			}
 			if(ev.type == sf::Event::MouseMoved)
 			{
@@ -199,6 +243,14 @@ int main(int argc, const char* argv[])
 		{
 			t2ss.str("");
 		}
+		showMBox.update(window);
+		showMBox.hoverLogic();
+		if(tts3.str().length() > 30)
+		{
+			tts3.str("");
+		}
+		std::string temp3 = tts3.str();
+		term3Text.setString(temp3);
 		std::string temp2 = t2ss.str();
 		term2Text.setString(temp2);
 		////////////////////////////////////
@@ -235,6 +287,14 @@ int main(int argc, const char* argv[])
 		window.draw(bg4);
 		window.draw(bg4Title.getText());
 		pBar.render(window);
+		////////////////////////////////////
+
+		//////MESSAGE-BOX EXAMPLE///////////
+		window.draw(bg5);
+		window.draw(bg5Title.getText());
+		showMBox.render(window);
+		window.draw(term3);
+		window.draw(term3Text.getText());
 		////////////////////////////////////
 
 		////////////////////////////////////
