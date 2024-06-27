@@ -4,9 +4,9 @@
 #include <CoreFoundation/CoreFoundation.h>
 
 #define MB_OK               0x01
-#define MB_CANCEL           0x02
-#define MB_YES              0x04
-#define MB_NO               0x08
+#define MB_OKCANCEL         0x02
+#define MB_YESNO            0x04
+#define MB_YESNOCANCEL      0x08
 #define MB_ICONINFORMATION  0x10
 #define MB_ICONERROR        0x20
 #define MB_ICONQUESTION     0x40
@@ -29,16 +29,18 @@ public:
         CFStringRef otherButton_ref = NULL;
 
 
-        if (message_type & (MB_OK | MB_CANCEL)) {
+        if (message_type & (MB_OK)) {
             defaultButton_ref = CFStringCreateWithCString(NULL, "OK", kCFStringEncodingUTF8);
-            altButton_ref = CFStringCreateWithCString(NULL, "Cancel", kCFStringEncodingUTF8);
-        } else if (message_type & (MB_YES | MB_NO)) {
+        } else if (message_type & (MB_YESNO)) {
             defaultButton_ref = CFStringCreateWithCString(NULL, "Yes", kCFStringEncodingUTF8);
             altButton_ref = CFStringCreateWithCString(NULL, "No", kCFStringEncodingUTF8);
-        } else if (message_type & (MB_YES | MB_NO | MB_CANCEL)) {
+        } else if (message_type & (MB_YESNOCANCEL)) {
             defaultButton_ref = CFStringCreateWithCString(NULL, "Yes", kCFStringEncodingUTF8);
             altButton_ref = CFStringCreateWithCString(NULL, "No", kCFStringEncodingUTF8);
             otherButton_ref = CFStringCreateWithCString(NULL, "Cancel", kCFStringEncodingUTF8);
+        } else if (message_type & (MB_OKCANCEL)) {
+            defaultButton_ref = CFStringCreateWithCString(NULL, "OK", kCFStringEncodingUTF8);
+            altButton_ref = CFStringCreateWithCString(NULL, "Cancel", kCFStringEncodingUTF8);
         }
 
         if (message_type & MB_ICONINFORMATION) {
@@ -80,16 +82,16 @@ public:
         );
 
         if (err == kCFUserNotificationDefaultResponse || err == kCFUserNotificationAlternateResponse) {
-            if (message_type & (MB_OK | MB_CANCEL)) {
+            if (message_type & (MB_OKCANCEL)) {
                 choice = (result == kCFUserNotificationDefaultResponse) ? 1 : 2;
-            } else if (message_type & (MB_YES | MB_NO | MB_CANCEL)) {
+            } else if (message_type & (MB_YESNOCANCEL)) {
                 if (result == kCFUserNotificationDefaultResponse)
                     choice = 1;
                 else if (result == kCFUserNotificationAlternateResponse)
                     choice = 2;
                 else
                     choice = 3;
-            } else if (message_type & (MB_YES | MB_NO)) {
+            } else if (message_type & (MB_YESNO)) {
                 choice = (result == kCFUserNotificationDefaultResponse) ? 1 : 2;
             }
         }

@@ -10,6 +10,10 @@ class ProgressBar
 private:  
   sf::RectangleShape emptyBar;
   sf::RectangleShape progress;
+  sf::Text percentage;
+  sf::Font font;
+  std::stringstream ss;
+  int maxValue;
 
   void init();
 

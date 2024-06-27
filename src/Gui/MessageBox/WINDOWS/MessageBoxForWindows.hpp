@@ -2,7 +2,6 @@
 #define MessageBoxForWindows_h
 
 #include <windows.h>
-#endif
 #include <string>
 
 
@@ -15,7 +14,7 @@ private:
 public:
     MessageBoxM(LPCSTR Title, LPCSTR Message, DWORD type)
     {
-        MessageBoxA(NULL, Title, Message, type);
+        choice = MessageBoxA(NULL, Title, Message, type);
     }
 
     int getChoice() { return choice; }

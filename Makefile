@@ -18,14 +18,14 @@ endif
 
 # Replace "src" with the name of the folder where all your cpp code is
 cppFileNames := $(shell find ./src -type f -name "*.cpp")
-objcppFileNames := $(shell find ./src -name "*.mm")
 
 all: compile
 
 compile:	
-	# For Windows
 ifeq ($(OS), Windows_NT)
+	# For Windows
 	g++ -std=c++17 $(cppFileNames) -I$(INCLUDE_PATH) -o Gui -L$(SFML_PATH) -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio -lwinmm -lgdi32 -lole32 -lwinpthread -IC:\\msys64\\usr\\include\\win32 -LC:\\msys64\\usr\\lib\\win32
 else
-	g++ -std=c++17 $(cppFileNames) $(objcppFileNames) -I$(INCLUDE_PATH) -o Gui -L$(SFML_PATH) -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio -framework CoreFoundation
+	# For Mac OSX
+	g++ -std=c++17 $(cppFileNames) -I$(INCLUDE_PATH) -o Gui -L$(SFML_PATH) -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio -framework CoreFoundation
 endif

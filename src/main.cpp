@@ -4,7 +4,12 @@
 int main(int argc, const char* argv[])
 {
 	/////////WINDOW SHIT///////////////////////////////
-	sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "GUI DEVELOPMENT", sf::Style::Fullscreen);
+	#ifdef _WIN32
+		sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "GUI DEVELOPMENT", sf::Style::Titlebar | sf::Style::Close);
+	#elif TARGET_OS_MAC
+		sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "GUI DEVELOPMENT", sf::Style::Fullscreen);
+	#endif
+		
 	window.setPosition(sf::Vector2i(0, 0));
 	window.setFramerateLimit(60);
 
@@ -98,6 +103,15 @@ int main(int argc, const char* argv[])
 		bg4.getPosition().x + (bg4.getSize().x / 2.f - 1.25*100/2.f),
 		bg4.getPosition().y + (bg4.getSize().y / 2.f - 0.25*100/2.f)
 	));
+	Gui::Text note(
+		"Press 'R' to reset progress bar.",
+		 sf::Vector2f(
+			bg4.getPosition().x + 7,
+			bg4.getPosition().y + (bg4.getSize().y - (32 * 0.5))
+		 ),
+		 12,
+		 sf::Color::Black
+	);
 	float i = 0;
 	////////////////////////////////////////////////////
 
@@ -147,6 +161,10 @@ int main(int argc, const char* argv[])
 					window.close();
 					running = false;
 				}
+				if(ev.key.code == sf::Keyboard::R)
+				{
+					i = 0;
+				}
 			}
 			if(ev.type == sf::Event::MouseButtonPressed)
 			{
@@ -189,10 +207,10 @@ int main(int argc, const char* argv[])
 				if(showMBox.isOver())
 				{
 					#ifdef _WIN32
-						Gui::MessageBoxM mBoxW("Title", "Message", MB_OK | MB_CANCEL | MB_ICONINFORMATION);
+						Gui::MessageBoxM mBoxW("Title", "Message", MB_OKCANCEL | MB_ICONINFORMATION);
 						tts3 << mBoxW.getChoice() << "\n";
 					#elif TARGET_OS_MAC
-						Gui::MessageBoxM mBoxM("Header", "Message", MB_OK | MB_CANCEL | MB_ICONINFORMATION);
+						Gui::MessageBoxM mBoxM("Header", "Message", MB_OKCANCEL | MB_ICONINFORMATION);
 						tts3 << mBoxM.getChoice() << "\n";
 					#endif
 				}
@@ -287,6 +305,7 @@ int main(int argc, const char* argv[])
 		window.draw(bg4);
 		window.draw(bg4Title.getText());
 		pBar.render(window);
+		window.draw(note.getText());
 		////////////////////////////////////
 
 		//////MESSAGE-BOX EXAMPLE///////////
