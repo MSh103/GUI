@@ -6,5 +6,6 @@
 #include "Text/Text.hpp"
 #include "TextBox/TextBox.hpp"
 #include "ProgressBar/ProgressBar.hpp"
+#include "MessageBox/MessageBox.hpp"
 
 #endif // !GUI_HPP

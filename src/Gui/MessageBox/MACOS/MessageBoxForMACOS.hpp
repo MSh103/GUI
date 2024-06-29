@@ -44,22 +44,22 @@ public:
         }
 
         if (message_type & MB_ICONINFORMATION) {
-            char* iconPath = "/Users/msh/dev/VISUAL_STUDIO_CODE_REPOS/Gui Development/GUI/res/icons/info.png";
+            const char* iconPath = "/Users/msh/dev/VISUAL_STUDIO_CODE_REPOS/Gui Development/GUI/res/icons/info.png";
             CFStringRef path_ref = CFStringCreateWithCString(NULL, iconPath, kCFStringEncodingUTF8);
             iconURL = CFURLCreateWithFileSystemPath(NULL, path_ref, kCFURLPOSIXPathStyle, false);
             CFRelease(path_ref);
         } else if (message_type & MB_ICONERROR) {
-            char* iconPath = "/Users/msh/dev/VISUAL_STUDIO_CODE_REPOS/Gui Development/GUI/res/icons/error.png";
+            const char* iconPath = "/Users/msh/dev/VISUAL_STUDIO_CODE_REPOS/Gui Development/GUI/res/icons/error.png";
             CFStringRef path_ref = CFStringCreateWithCString(NULL, iconPath, kCFStringEncodingUTF8);
             iconURL = CFURLCreateWithFileSystemPath(NULL, path_ref, kCFURLPOSIXPathStyle, false);
             CFRelease(path_ref);
         } else if (message_type & MB_ICONQUESTION) {
-            char* iconPath = "/Users/msh/dev/VISUAL_STUDIO_CODE_REPOS/Gui Development/GUI/res/icons/question.png";
+            const char* iconPath = "/Users/msh/dev/VISUAL_STUDIO_CODE_REPOS/Gui Development/GUI/res/icons/question.png";
             CFStringRef path_ref = CFStringCreateWithCString(NULL, iconPath, kCFStringEncodingUTF8);
             iconURL = CFURLCreateWithFileSystemPath(NULL, path_ref, kCFURLPOSIXPathStyle, false);
             CFRelease(path_ref);
         } else if (message_type & MB_ICONWARNING) {
-            char* iconPath = "/Users/msh/dev/VISUAL_STUDIO_CODE_REPOS/Gui Development/GUI/res/icons/warning.png";
+            const char* iconPath = "/Users/msh/dev/VISUAL_STUDIO_CODE_REPOS/Gui Development/GUI/res/icons/warning.png";
             CFStringRef path_ref = CFStringCreateWithCString(NULL, iconPath, kCFStringEncodingUTF8);
             iconURL = CFURLCreateWithFileSystemPath(NULL, path_ref, kCFURLPOSIXPathStyle, false);
             CFRelease(path_ref);

@@ -1,5 +1,4 @@
 #include "Gui/Gui.hpp"
-#include "Gui/MessageBox/MessageBox.hpp"
 
 int main(int argc, const char* argv[])
 {
@@ -91,7 +90,7 @@ int main(int argc, const char* argv[])
 	std::stringstream t2ss;	// t2ss = Term 2 StringStream
 	////////////////////////////////////////////////////
 
-	///////PROGRESS-BAR EXAMPLE/////////////////////////
+	///////PROGRESS-BAR EXAMPLE//////////////
 	sf::RectangleShape bg4(sf::Vector2f(300, 150));
 	bg4.setFillColor(sf::Color::White);
 	bg4.setOutlineColor(sf::Color::Black);
@@ -104,15 +103,16 @@ int main(int argc, const char* argv[])
 		bg4.getPosition().y + (bg4.getSize().y / 2.f - 0.25*100/2.f)
 	));
 	Gui::Text note(
-		"Press 'R' to reset progress bar.",
+		"Press 'S' to stop progress.\nPress 'R' to reset progress bar.",
 		 sf::Vector2f(
 			bg4.getPosition().x + 7,
-			bg4.getPosition().y + (bg4.getSize().y - (32 * 0.5))
+			bg4.getPosition().y + (bg4.getSize().y - (32 * 1))
 		 ),
 		 12,
 		 sf::Color::Black
 	);
 	float i = 0;
+	bool stopped = true;
 	////////////////////////////////////////////////////
 
 	///////MESSAGE-BOX EXAMPLE//////////////////////////
@@ -165,6 +165,10 @@ int main(int argc, const char* argv[])
 				{
 					i = 0;
 				}
+				if(ev.key.code == sf::Keyboard::S)
+				{
+					stopped = !stopped;
+				}
 			}
 			if(ev.type == sf::Event::MouseButtonPressed)
 			{
@@ -189,16 +193,19 @@ int main(int argc, const char* argv[])
 					{
 						cBox.setTitle(0);
 						t2ss << "Option 1 is clicked\n";
+						cBox.setOpenState(false);
 					}
 					if(cBox.hoverButton[1])
 					{
 						cBox.setTitle(1);
 						t2ss << "Option 2 is clicked\n";
+						cBox.setOpenState(false);
 					}
 					if(cBox.hoverButton[2])
 					{
 						cBox.setTitle(2);
 						t2ss << "Option 3 is clicked\n";
+						cBox.setOpenState(false);
 					}
 				}
 				////////////////////////////////////////////
@@ -324,7 +331,10 @@ int main(int argc, const char* argv[])
 		
 		if(i < 100)
 		{
-			i += 0.1;
+			if(!stopped)
+			{
+				i += 0.1;
+			}
 		} else {
 			i = 100;
 		}
