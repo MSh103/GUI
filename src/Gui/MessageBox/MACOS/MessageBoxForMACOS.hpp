@@ -11,6 +11,10 @@
 #define MB_ICONERROR        0x20
 #define MB_ICONQUESTION     0x40
 #define MB_ICONWARNING      0x80
+#define IDCANCEL            2
+#define IDNO                7
+#define IDOK                1
+#define IDYES               6
 
 namespace Gui
 {
@@ -83,16 +87,16 @@ public:
 
         if (err == kCFUserNotificationDefaultResponse || err == kCFUserNotificationAlternateResponse) {
             if (message_type & (MB_OKCANCEL)) {
-                choice = (result == kCFUserNotificationDefaultResponse) ? 1 : 2;
+                choice = (result == kCFUserNotificationDefaultResponse) ? IDOK : IDCANCEL;
             } else if (message_type & (MB_YESNOCANCEL)) {
                 if (result == kCFUserNotificationDefaultResponse)
-                    choice = 1;
+                    choice = IDYES;
                 else if (result == kCFUserNotificationAlternateResponse)
-                    choice = 2;
+                    choice = IDNO;
                 else
-                    choice = 3;
+                    choice = IDCANCEL;
             } else if (message_type & (MB_YESNO)) {
-                choice = (result == kCFUserNotificationDefaultResponse) ? 1 : 2;
+                choice = (result == kCFUserNotificationDefaultResponse) ? IDYES : IDNO;
             }
         }
 

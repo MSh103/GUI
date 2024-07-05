@@ -40,6 +40,28 @@ ProgressBar::ProgressBar(int currentValue, int maxValue)
   ));
 }
 
+void ProgressBar::create(int currentValue, int maxValue)
+{
+  int width = 1.25 * maxValue;
+  int height = 0.25 * maxValue;
+  this->maxValue = maxValue;
+  
+  emptyBar.setSize(sf::Vector2f(width + 8, height + 4));
+  progress.setSize(sf::Vector2f(1, height));
+  init();
+  percentage.setCharacterSize(0.65 * height);
+  ss << currentValue << "/" << maxValue << " %";
+  percentage.setPosition(sf::Vector2f(
+    emptyBar.getPosition().x + emptyBar.getSize().x / 2.f,
+    emptyBar.getPosition().y + emptyBar.getSize().y / 2.f
+  ));
+  percentage.setString(ss.str());
+  percentage.setOrigin(sf::Vector2f(
+    percentage.getGlobalBounds().getSize().x / 2.f,
+    percentage.getGlobalBounds().getSize().y / 2.f + 5
+  ));
+}
+
 void ProgressBar::setPosition(sf::Vector2f pos)
 {
   emptyBar.setPosition(pos);

@@ -14,7 +14,7 @@ private:
 public:
     MessageBoxM(LPCSTR Title, LPCSTR Message, DWORD type)
     {
-        choice = MessageBoxA(NULL, Title, Message, type);
+        choice = MessageBoxA(NULL, Message, Title, type);
     }
 
     int getChoice() { return choice; }

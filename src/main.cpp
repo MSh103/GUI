@@ -103,7 +103,7 @@ int main(int argc, const char* argv[])
 		bg4.getPosition().y + (bg4.getSize().y / 2.f - 0.25*100/2.f)
 	));
 	Gui::Text note(
-		"Press 'S' to stop progress.\nPress 'R' to reset progress bar.",
+		"Press 'S' to stop/start progress.\nPress 'R' to reset progress bar.",
 		 sf::Vector2f(
 			bg4.getPosition().x + 7,
 			bg4.getPosition().y + (bg4.getSize().y - (32 * 1))
@@ -217,8 +217,8 @@ int main(int argc, const char* argv[])
 						Gui::MessageBoxM mBoxW("Title", "Message", MB_OKCANCEL | MB_ICONINFORMATION);
 						tts3 << mBoxW.getChoice() << "\n";
 					#elif TARGET_OS_MAC
-						Gui::MessageBoxM mBoxM("Header", "Message", MB_OKCANCEL | MB_ICONINFORMATION);
-						tts3 << mBoxM.getChoice() << "\n";
+						Gui::MessageBoxM mBoxD("Header", "Message", MB_OKCANCEL | MB_ICONINFORMATION);
+						tts3 << mBoxD.getChoice() << "\n";
 					#endif
 				}
 				////////////////////////////////////////////
