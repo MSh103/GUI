@@ -3,6 +3,7 @@
 
 #include <windows.h>
 #include <string>
+#include <../../GLOBALS/globals.hpp>
 
 
 namespace Gui
@@ -12,9 +13,9 @@ private:
     int choice;
 
 public:
-    MessageBoxM(LPCSTR Title, LPCSTR Message, DWORD type)
+    MessageBoxM(sf::RenderWindow& target, LPCSTR Title, LPCSTR Message, DWORD type)
     {
-        choice = MessageBoxA(NULL, Message, Title, type);
+        choice = MessageBoxA(target.getSystemHandle(), Message, Title, type);
     }
 
     int getChoice() { return choice; }

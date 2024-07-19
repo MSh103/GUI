@@ -54,6 +54,8 @@ namespace Gui {
 
 		void setTitleCharSize(int size) { ComboBoxTitle.setCharacterSize(size); }
 		std::vector<sf::Text> getOptionsText() { return list; }
+
+		void setPosition(sf::Vector2f pos);
 	};
 
 }

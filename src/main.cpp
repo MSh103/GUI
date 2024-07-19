@@ -8,7 +8,7 @@ int main(int argc, const char* argv[])
 	#elif TARGET_OS_MAC
 		sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "GUI DEVELOPMENT", sf::Style::Fullscreen);
 	#endif
-		
+
 	window.setPosition(sf::Vector2i(0, 0));
 	window.setFramerateLimit(60);
 
@@ -72,7 +72,7 @@ int main(int argc, const char* argv[])
 		3,
 		sf::Vector2f(
 			 bg3.getPosition().x + (bg3.getSize().x / 2.f  - 275 / 2.f),
-			 bg3.getPosition().y + (bg3.getSize().y / 2.f - 175) 
+			 bg3.getPosition().y + (bg3.getSize().y / 2.f - 175)
 			),
 		options,
 		{ 270, 75 },
@@ -103,7 +103,7 @@ int main(int argc, const char* argv[])
 		bg4.getPosition().y + (bg4.getSize().y / 2.f - 0.25*100/2.f)
 	));
 	Gui::Text note(
-		"Press 'S' to stop/start progress.\nPress 'R' to reset progress bar.",
+		"Press the Button to stop/start progress.\nPress 'R' to reset progress bar.",
 		 sf::Vector2f(
 			bg4.getPosition().x + 7,
 			bg4.getPosition().y + (bg4.getSize().y - (32 * 1))
@@ -165,10 +165,6 @@ int main(int argc, const char* argv[])
 				{
 					i = 0;
 				}
-				if(ev.key.code == sf::Keyboard::S)
-				{
-					stopped = !stopped;
-				}
 			}
 			if(ev.type == sf::Event::MouseButtonPressed)
 			{
@@ -178,6 +174,7 @@ int main(int argc, const char* argv[])
 					if(button.isOver())
 					{
 						tss << "Button is clicked\n";
+						stopped = !stopped;
 					}
 				}
 				////////////////////////////////////////////
@@ -214,7 +211,7 @@ int main(int argc, const char* argv[])
 				if(showMBox.isOver())
 				{
 					#ifdef _WIN32
-						Gui::MessageBoxM mBoxW("Title", "Message", MB_OKCANCEL | MB_ICONINFORMATION);
+						Gui::MessageBoxM mBoxW(window, "Title", "Message", MB_OKCANCEL | MB_ICONINFORMATION);
 						tts3 << mBoxW.getChoice() << "\n";
 					#elif TARGET_OS_MAC
 						Gui::MessageBoxM mBoxD("Header", "Message", MB_OKCANCEL | MB_ICONINFORMATION);
@@ -299,7 +296,7 @@ int main(int argc, const char* argv[])
 		window.draw(bg2Title.getText());
 		window.draw(text.getText());
 		////////////////////////////////////
-		
+
 		//////COMBO-BOX EXAMPLE/////////////
 		window.draw(bg3);
 		window.draw(bg3Title.getText());
@@ -328,7 +325,7 @@ int main(int argc, const char* argv[])
 		//////CHG OF BUFFERS////////////////
 		window.display();
 		////////////////////////////////////
-		
+
 		if(i < 100)
 		{
 			if(!stopped)

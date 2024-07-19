@@ -1,6 +1,8 @@
 #include "Button.hpp"
 
-void Gui::Button::init()
+using namespace Gui;
+
+void Button::init()
 {
 	if (!font.loadFromFile("res/font/font.OTF"))
 	{
@@ -20,11 +22,11 @@ void Gui::Button::init()
 	isMouseOver = false;
 }
 
-Gui::Button::Button()
+Button::Button()
 {
 }
 
-Gui::Button::Button(std::string msg, sf::Vector2f pos, sf::Vector2f buttonSize, int charSize, sf::Color bgColor, sf::Color fgColor, sf::Color bgHoverColor)
+Button::Button(std::string msg, sf::Vector2f pos, sf::Vector2f buttonSize, int charSize, sf::Color bgColor, sf::Color fgColor, sf::Color bgHoverColor)
 {
 	init();
 
@@ -55,7 +57,7 @@ Gui::Button::Button(std::string msg, sf::Vector2f pos, sf::Vector2f buttonSize, 
 	soundPlayed = false;
 }
 
-void Gui::Button::create(std::string msg, sf::Vector2f pos, sf::Vector2f buttonSize, int charSize, sf::Color bgColor, sf::Color fgColor, sf::Color bgHoverColor)
+void Button::create(std::string msg, sf::Vector2f pos, sf::Vector2f buttonSize, int charSize, sf::Color bgColor, sf::Color fgColor, sf::Color bgHoverColor)
 {
 	init();
 
@@ -84,7 +86,7 @@ void Gui::Button::create(std::string msg, sf::Vector2f pos, sf::Vector2f buttonS
 	hoverColor[2] = float(bgHoverColor.b);
 }
 
-void Gui::Button::update(sf::RenderWindow& target)
+void Button::update(sf::RenderWindow& target)
 {
 	sf::Vector2i mousePos = sf::Mouse::getPosition(target);
 
@@ -104,13 +106,13 @@ void Gui::Button::update(sf::RenderWindow& target)
 
 }
 
-void Gui::Button::render(sf::RenderWindow& target)
+void Button::render(sf::RenderWindow& target)
 {
 	target.draw(bg);
 	target.draw(fg);
 }
 
-void Gui::Button::hoverLogic()
+void Button::hoverLogic()
 {
 	if (isMouseOver)
 	{
@@ -134,12 +136,34 @@ void Gui::Button::hoverLogic()
 	}
 }
 
-void Gui::Button::setTextPosition(sf::Vector2f position)
+void Button::setTextPosition(sf::Vector2f position)
 {
 	fg.setPosition(position);
 }
 
-void Gui::Button::moveText(sf::Vector2f position)
+void Button::moveText(sf::Vector2f position)
 {
 	fg.move(position);
+}
+
+void Button::setPosWCenteredText(sf::Vector2f pos)
+{
+	bg.setPosition(pos);
+
+	sf::Vector2f textPos;
+	textPos.x = pos.x + (bg.getSize().x / 2.f);
+	textPos.y = pos.y + (bg.getSize().y / 2.f);
+
+	fg.setPosition(textPos);
+}
+
+void Button::setPosition(sf::Vector2f buttonPos, float xOffset, float yOffset)
+{
+	bg.setPosition(buttonPos);
+
+	sf::Vector2f textPos;
+	textPos.x = buttonPos.x + (xOffset);
+	textPos.y = buttonPos.y + (yOffset);
+
+	fg.setPosition(textPos);
 }

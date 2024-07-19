@@ -45,6 +45,10 @@ namespace Gui {
 		sf::Vector2f getButtonPosition() { return bg.getPosition(); }
 
 		sf::Text getText() { return fg; }
+
+		void setPosWCenteredText(sf::Vector2f pos);
+
+		void setPosition(sf::Vector2f buttonPos, float xOffset, float yOffset);
 	};
 
 }

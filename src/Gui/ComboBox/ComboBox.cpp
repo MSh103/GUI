@@ -1,6 +1,8 @@
 #include "ComboBox.hpp"
 
-void Gui::ComboBox::init()
+using namespace Gui;
+
+void ComboBox::init()
 {
 	if (!font.loadFromFile("res/font/font.OTF"))
 	{
@@ -18,66 +20,11 @@ void Gui::ComboBox::init()
 	open = false;
 }
 
-Gui::ComboBox::ComboBox()
+ComboBox::ComboBox()
 {
 }
 
-Gui::ComboBox::ComboBox(int noOptions, sf::Vector2f pos, std::vector<std::string> options, sf::Vector2f size, std::string defaultOption, sf::Color MainButton, sf::Color SubButtons, int charSize)
-{
-	init();
-	this->noOfOptions = noOptions;
-	this->pos = pos;
-	this->size = size;
-	this->options = options;
-
-	for (int i = 0; i < this->noOfOptions; i++)
-	{
-		sf::Sound ssound;
-		ssound.setBuffer(buffer);
-		ssound.setLoop(false);
-		buttonSound.push_back(ssound);
-		hoverButton.push_back(false);
-		soundPlayedForButtons.push_back(false);
-	}
-
-	bg.setSize({ this->size.x, this->size.y });
-	bg.setFillColor(MainButton);
-	bg.setPosition({ this->pos.x, this->pos.y});
-
-	ComboBoxTitle.setPosition(sf::Vector2f(
-		pos.x + (size.x / 2.f),
-		pos.y + (size.y / 2.f)
-	));
-
-	list.resize(noOfOptions);
-	for (int i = 0; i < this->noOfOptions; ++i) {
-		sf::Text text;
-		sf::RectangleShape rect;
-		this->hoverButton[i] = false;
-		rect.setSize(this->size);
-		rect.setFillColor(SubButtons);
-		rect.setPosition(sf::Vector2f(
-			pos.x,
-			pos.y + (i + 1) * size.y
-		));
-		text.setFont(font);
-		text.setCharacterSize(charSize);
-		if (!this->options.empty() && i < this->options.size()) {
-			text.setString(this->options[i]);
-		}
-		text.setPosition(pos.x + (size.x / 2.f), pos.y + (i + 1.5) * (size.y));
-		text.setOrigin(text.getLocalBounds().getSize() / 2.f);
-		text.setFillColor(sf::Color::White);
-		list[i] = text;
-		bgList.push_back(rect);
-	}
-
-	ComboBoxTitle.setString(defaultOption);
-	ComboBoxTitle.setCharacterSize(charSize);
-	ComboBoxTitle.setOrigin(ComboBoxTitle.getLocalBounds().getSize() / 2.f);
-}
-
-void Gui::ComboBox::create(int noOptions, sf::Vector2f pos, std::vector<std::string> options, sf::Vector2f size, std::string defaultOption, sf::Color MainButton, sf::Color SubButtons, int charSize)
+ComboBox::ComboBox(int noOptions, sf::Vector2f pos, std::vector<std::string> options, sf::Vector2f size, std::string defaultOption, sf::Color MainButton, sf::Color SubButtons, int charSize)
 {
 	init();
 	this->noOfOptions = noOptions;
@@ -132,7 +79,62 @@ void Gui::ComboBox::create(int noOptions, sf::Vector2f pos, std::vector<std::str
 	ComboBoxTitle.setOrigin(ComboBoxTitle.getLocalBounds().getSize() / 2.f);
 }
 
-void Gui::ComboBox::update(sf::RenderWindow& target)
+void ComboBox::create(int noOptions, sf::Vector2f pos, std::vector<std::string> options, sf::Vector2f size, std::string defaultOption, sf::Color MainButton, sf::Color SubButtons, int charSize)
+{
+	init();
+	this->noOfOptions = noOptions;
+	this->pos = pos;
+	this->size = size;
+	this->options = options;
+
+	for (int i = 0; i < this->noOfOptions; i++)
+	{
+		sf::Sound ssound;
+		ssound.setBuffer(buffer);
+		ssound.setLoop(false);
+		buttonSound.push_back(ssound);
+		hoverButton.push_back(false);
+		soundPlayedForButtons.push_back(false);
+	}
+
+	bg.setSize({ this->size.x, this->size.y });
+	bg.setFillColor(MainButton);
+	bg.setPosition({ this->pos.x, this->pos.y});
+
+	ComboBoxTitle.setPosition(sf::Vector2f(
+		pos.x + (size.x / 2.f),
+		pos.y + (size.y / 2.f)
+	));
+
+	list.resize(noOfOptions);
+	for (int i = 0; i < this->noOfOptions; ++i) {
+		sf::Text text;
+		sf::RectangleShape rect;
+		this->hoverButton[i] = false;
+		rect.setSize(this->size);
+		rect.setFillColor(SubButtons);
+		rect.setPosition(sf::Vector2f(
+			pos.x,
+			pos.y + (i + 1) * size.y
+		));
+		text.setFont(font);
+		text.setCharacterSize(charSize);
+		if (!this->options.empty() && i < this->options.size()) {
+			text.setString(this->options[i]);
+		}
+		text.setPosition(pos.x + (size.x / 2.f), pos.y + (i + 1.5) * (size.y));
+		text.setOrigin(text.getLocalBounds().getSize() / 2.f);
+		text.setFillColor(sf::Color::White);
+		list[i] = text;
+		bgList.push_back(rect);
+	}
+
+	ComboBoxTitle.setString(defaultOption);
+	ComboBoxTitle.setCharacterSize(charSize);
+	ComboBoxTitle.setOrigin(ComboBoxTitle.getLocalBounds().getSize() / 2.f);
+}
+
+void ComboBox::update(sf::RenderWindow& target)
 {
 	sf::Vector2i mousePos = sf::Mouse::getPosition(target);
 
@@ -164,7 +166,7 @@ void Gui::ComboBox::update(sf::RenderWindow& target)
 
 }
 
-void Gui::ComboBox::render(sf::RenderWindow& target)
+void ComboBox::render(sf::RenderWindow& target)
 {
 
 	if (open)
@@ -185,7 +187,7 @@ void Gui::ComboBox::render(sf::RenderWindow& target)
 	}
 }
 
-void Gui::ComboBox::hoverLogic(sf::Color normalTitleButton, sf::Color hoverTitle, sf::Color normalButtonColor, sf::Color hoverButtonColor)
+void ComboBox::hoverLogic(sf::Color normalTitleButton, sf::Color hoverTitle, sf::Color normalButtonColor, sf::Color hoverButtonColor)
 {
 
 	if (isMouseOver)
@@ -231,21 +233,42 @@ void Gui::ComboBox::hoverLogic(sf::Color normalTitleButton, sf::Color hoverTitle
 }
 
 
-void Gui::ComboBox::setTitle(int option)
+void ComboBox::setTitle(int option)
 {
 	ComboBoxTitle.setString(list[option].getString());
 	ComboBoxTitle.setOrigin(ComboBoxTitle.getLocalBounds().getSize() / 2.f);
 }
 
-void Gui::ComboBox::setMainTextColor(sf::Color color)
+void ComboBox::setMainTextColor(sf::Color color)
 {
 	ComboBoxTitle.setFillColor(color);
 }
 
-void Gui::ComboBox::setSubTextColor(sf::Color color)
+void ComboBox::setSubTextColor(sf::Color color)
 {
 	for (auto& List : list)
 	{
 		List.setFillColor(color);
+	}
+}
+
+void ComboBox::setPosition(sf::Vector2f pos)
+{
+	bg.setPosition(pos);
+	ComboBoxTitle.setPosition(sf::Vector2f(
+		pos.x + (bg.getSize().x / 2.f),
+		pos.y + (bg.getSize().y / 2.f)
+	));
+
+	for(int i = 0; i < this->noOfOptions; i++)
+	{
+		bgList[i].setPosition(
+			pos.x,
+			pos.y + (i + 1) * bgList[i].getSize().y
+		);
+		list[i].setPosition(
+			pos.x + (bgList[i].getSize().x / 2.f),
+			pos.y + (i + 1.5) * (bgList[i].getSize().y)
+		);
 	}
 }
