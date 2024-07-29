@@ -1,1 +1,1 @@
-Gui in SFML. WIP. Version 0.1-24
+Gui in SFML. WIP. Version 1.7.24
