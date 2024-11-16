@@ -2,14 +2,9 @@
 
 int main(int argc, const char* argv[])
 {
-	/////////WINDOW SHIT///////////////////////////////
-	#ifdef _WIN32
-		sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "GUI DEVELOPMENT", sf::Style::Titlebar | sf::Style::Close);
-	#elif TARGET_OS_MAC
-		sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "GUI DEVELOPMENT", sf::Style::Fullscreen);
-	#endif
+	/////////WINDOW HANDLING///////////////////////////
+	sf::RenderWindow window(sf::VideoMode(1900, 1080), "GUI DEVELOPMENT", sf::Style::Titlebar | sf::Style::Close);
 
-	window.setPosition(sf::Vector2i(0, 0));
 	window.setFramerateLimit(60);
 
 	sf::Image icon;

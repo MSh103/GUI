@@ -17,7 +17,7 @@ else
 endif
 
 # Replace "src" with the name of the folder where all your cpp code is
-cppFileNames := $(shell find ./src -type f -name "*.cpp")
+cppFileNames := $(shell find ./ -type f -name "*.cpp")
 
 all: compile
 

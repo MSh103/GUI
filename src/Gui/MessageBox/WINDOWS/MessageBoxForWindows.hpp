@@ -3,7 +3,7 @@
 
 #include <windows.h>
 #include <string>
-#include <../../GLOBALS/globals.hpp>
+#include "../../GLOBALS/globals.hpp"
 
 
 namespace Gui
